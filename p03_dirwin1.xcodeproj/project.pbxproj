@@ -8,19 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		D72321A3233BA7A800ED8200 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72321A2233BA7A800ED8200 /* AppDelegate.swift */; };
-		D72321A5233BA7A800ED8200 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D72321A4233BA7A800ED8200 /* GameScene.sks */; };
 		D72321A7233BA7A800ED8200 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = D72321A6233BA7A800ED8200 /* Actions.sks */; };
 		D72321A9233BA7A800ED8200 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72321A8233BA7A800ED8200 /* GameScene.swift */; };
 		D72321AB233BA7A800ED8200 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72321AA233BA7A800ED8200 /* GameViewController.swift */; };
 		D72321AE233BA7A800ED8200 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D72321AC233BA7A800ED8200 /* Main.storyboard */; };
 		D72321B0233BA7AF00ED8200 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D72321AF233BA7AF00ED8200 /* Assets.xcassets */; };
 		D72321B3233BA7AF00ED8200 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D72321B1233BA7AF00ED8200 /* LaunchScreen.storyboard */; };
+		D72321BD233E524700ED8200 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D72321BC233E524700ED8200 /* GameScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D723219F233BA7A800ED8200 /* p03_dirwin1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = p03_dirwin1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D72321A2233BA7A800ED8200 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D72321A4233BA7A800ED8200 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		D72321A6233BA7A800ED8200 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		D72321A8233BA7A800ED8200 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		D72321AA233BA7A800ED8200 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -28,6 +27,7 @@
 		D72321AF233BA7AF00ED8200 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D72321B2233BA7AF00ED8200 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D72321B4233BA7AF00ED8200 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D72321BC233E524700ED8200 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = ../../../../../.Trash/GameScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				D72321A2233BA7A800ED8200 /* AppDelegate.swift */,
-				D72321A4233BA7A800ED8200 /* GameScene.sks */,
 				D72321A6233BA7A800ED8200 /* Actions.sks */,
+				D72321BC233E524700ED8200 /* GameScene.sks */,
 				D72321A8233BA7A800ED8200 /* GameScene.swift */,
 				D72321AA233BA7A800ED8200 /* GameViewController.swift */,
 				D72321AC233BA7A800ED8200 /* Main.storyboard */,
@@ -132,7 +132,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D72321AE233BA7A800ED8200 /* Main.storyboard in Resources */,
-				D72321A5233BA7A800ED8200 /* GameScene.sks in Resources */,
+				D72321BD233E524700ED8200 /* GameScene.sks in Resources */,
 				D72321B0233BA7AF00ED8200 /* Assets.xcassets in Resources */,
 				D72321B3233BA7AF00ED8200 /* LaunchScreen.storyboard in Resources */,
 				D72321A7233BA7A800ED8200 /* Actions.sks in Resources */,
