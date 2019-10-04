@@ -11,13 +11,28 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    var scene: GameScene
+    var level: Level!
+    
+    func beginGame() {
+      shuffle()
+    }
+
+    func shuffle() {
+      let newBlocks = level.shuffle()
+      scene.addSprites(for: newBlocks)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
+            level = Level()
+            
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
+                scene.level = level
+                
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
                 
@@ -29,6 +44,8 @@ class GameViewController: UIViewController {
             
             view.showsFPS = true
             view.showsNodeCount = true
+            
+            beginGame()
         }
     }
 

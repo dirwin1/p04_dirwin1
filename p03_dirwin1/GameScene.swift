@@ -2,10 +2,9 @@
 //  GameScene.swift
 //  p03_dirwin1
 //
-//  Created by Dylan Irwin on 9/25/19.
+//  Created by Dylan Irwin on 10/4/19.
 //  Copyright © 2019 Dylan Irwin. All rights reserved.
 //
-
 import SpriteKit
 import GameplayKit
 
@@ -13,6 +12,41 @@ class GameScene: SKScene {
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
+    
+    var level: Level!
+
+    let tileWidth: CGFloat = 96.0
+    let tileHeight: CGFloat = 96.0
+
+    let gameLayer = SKNode()
+    let blocksLayer = SKNode()
+    
+    init(size: Int){
+        addChild(gameLayer)
+
+        let layerPosition = CGPoint(
+            x: -tileWidth * CGFloat(numColumns) / 2,
+            y: -tileHeight * CGFloat(numRows) / 2)
+
+        blocksLayer.position = layerPosition
+        gameLayer.addChild(blocksLayer)
+    }
+    
+    func addSprites(for blocks: Set<Block>) {
+        for block in blocks {
+            let block = SKSpriteNode(imageNamed: block.blockType.spriteName)
+            block.size = CGSize(width: tileWidth, height: tileHeight)
+            block.position = pointFor(column: block.column, row: block.row)
+            blocksLayer.addChild(block)
+            block.sprite = sprite
+        }
+    }
+
+    private func pointFor(column: Int, row: Int) -> CGPoint {
+      return CGPoint(
+        x: CGFloat(column) * tileWidth + tileWidth / 2,
+        y: CGFloat(row) * tileHeight + tileHeight / 2)
+    }
     
     override func didMove(to view: SKView) {
         
