@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D70F58F2234B820900F4AF18 /* electric.png in Resources */ = {isa = PBXBuildFile; fileRef = D70F58F1234B820900F4AF18 /* electric.png */; };
+		D70F58F7234B822100F4AF18 /* spooky.png in Resources */ = {isa = PBXBuildFile; fileRef = D70F58F3234B822100F4AF18 /* spooky.png */; };
+		D70F58F8234B822100F4AF18 /* grass.png in Resources */ = {isa = PBXBuildFile; fileRef = D70F58F4234B822100F4AF18 /* grass.png */; };
+		D70F58F9234B822100F4AF18 /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = D70F58F5234B822100F4AF18 /* water.png */; };
+		D70F58FA234B822100F4AF18 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = D70F58F6234B822100F4AF18 /* fire.png */; };
 		D72321A3233BA7A800ED8200 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72321A2233BA7A800ED8200 /* AppDelegate.swift */; };
 		D72321A7233BA7A800ED8200 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = D72321A6233BA7A800ED8200 /* Actions.sks */; };
 		D72321AB233BA7A800ED8200 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72321AA233BA7A800ED8200 /* GameViewController.swift */; };
@@ -20,6 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D70F58F1234B820900F4AF18 /* electric.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = electric.png; path = p03_dirwin1/Assets.xcassets/electric.png; sourceTree = SOURCE_ROOT; };
+		D70F58F3234B822100F4AF18 /* spooky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spooky.png; path = p03_dirwin1/Assets.xcassets/spooky.png; sourceTree = SOURCE_ROOT; };
+		D70F58F4234B822100F4AF18 /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grass.png; path = p03_dirwin1/Assets.xcassets/grass.png; sourceTree = SOURCE_ROOT; };
+		D70F58F5234B822100F4AF18 /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = water.png; path = p03_dirwin1/Assets.xcassets/water.png; sourceTree = SOURCE_ROOT; };
+		D70F58F6234B822100F4AF18 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire.png; path = p03_dirwin1/Assets.xcassets/fire.png; sourceTree = SOURCE_ROOT; };
 		D723219F233BA7A800ED8200 /* p03_dirwin1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = p03_dirwin1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D72321A2233BA7A800ED8200 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D72321A6233BA7A800ED8200 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -45,6 +55,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D70F58F0234B817900F4AF18 /* Sprites.atlas */ = {
+			isa = PBXGroup;
+			children = (
+				D70F58F6234B822100F4AF18 /* fire.png */,
+				D70F58F4234B822100F4AF18 /* grass.png */,
+				D70F58F3234B822100F4AF18 /* spooky.png */,
+				D70F58F5234B822100F4AF18 /* water.png */,
+				D70F58F1234B820900F4AF18 /* electric.png */,
+			);
+			path = Sprites.atlas;
+			sourceTree = "<group>";
+		};
 		D7232196233BA7A700ED8200 = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +86,7 @@
 		D72321A1233BA7A800ED8200 /* p03_dirwin1 */ = {
 			isa = PBXGroup;
 			children = (
+				D70F58F0234B817900F4AF18 /* Sprites.atlas */,
 				D755BA2223478AB00020A691 /* GameScene.swift */,
 				D72321A2233BA7A800ED8200 /* AppDelegate.swift */,
 				D72321A6233BA7A800ED8200 /* Actions.sks */,
@@ -137,11 +160,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D70F58F2234B820900F4AF18 /* electric.png in Resources */,
 				D72321AE233BA7A800ED8200 /* Main.storyboard in Resources */,
 				D755BA1F23478A3F0020A691 /* GameScene.sks in Resources */,
 				D72321B0233BA7AF00ED8200 /* Assets.xcassets in Resources */,
+				D70F58F8234B822100F4AF18 /* grass.png in Resources */,
+				D70F58FA234B822100F4AF18 /* fire.png in Resources */,
+				D70F58F9234B822100F4AF18 /* water.png in Resources */,
 				D72321B3233BA7AF00ED8200 /* LaunchScreen.storyboard in Resources */,
 				D72321A7233BA7A800ED8200 /* Actions.sks in Resources */,
+				D70F58F7234B822100F4AF18 /* spooky.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

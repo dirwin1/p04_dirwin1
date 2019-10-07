@@ -21,7 +21,18 @@ class GameScene: SKScene {
     let gameLayer = SKNode()
     let blocksLayer = SKNode()
     
-    init(size: Int){
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder) is not used in this app")
+    }
+    
+    override init(size: CGSize) {
+        super.init(size: size)
+
+        anchorPoint = CGPoint(x: 0.5, y: 0.5)
+
+        let background = SKSpriteNode(imageNamed: "Background")
+        background.size = size
+        addChild(background)
         addChild(gameLayer)
 
         let layerPosition = CGPoint(
@@ -32,12 +43,13 @@ class GameScene: SKScene {
         gameLayer.addChild(blocksLayer)
     }
     
+    
     func addSprites(for blocks: Set<Block>) {
         for block in blocks {
-            let block = SKSpriteNode(imageNamed: block.blockType.spriteName)
-            block.size = CGSize(width: tileWidth, height: tileHeight)
-            block.position = pointFor(column: block.column, row: block.row)
-            blocksLayer.addChild(block)
+            let sprite = SKSpriteNode(imageNamed: block.blockType.spriteName)
+            sprite.size = CGSize(width: tileWidth, height: tileHeight)
+            sprite.position = pointFor(column: block.column, row: block.row)
+            blocksLayer.addChild(sprite)
             block.sprite = sprite
         }
     }
@@ -49,7 +61,6 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        
         // Get label node from scene and store it for use later
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         if let label = self.label {
