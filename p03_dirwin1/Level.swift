@@ -17,7 +17,7 @@ class Level {
     func block(atColumn column: Int, row: Int) -> Block? {
       precondition(column >= 0 && column < numColumns)
       precondition(row >= 0 && row < numRows)
-      return blocks[column][row]
+      return blocks[row][column]
     }
     
     func shuffle() -> Set<Block> {
@@ -36,12 +36,27 @@ class Level {
 
           // 3
           let block = Block(column: column, row: row, blockType: blockType)
-          blocks[column][row] = block
+          blocks[row][column] = block
 
           // 4
           set.insert(block)
         }
       }
       return set
+    }
+    
+    func performSwap(_ swap: Swap) {
+        let columnA = swap.blockA.column
+        let rowA = swap.blockA.row
+        let columnB = swap.blockB.column
+        let rowB = swap.blockB.row
+        
+        blocks[rowA][columnA] = swap.blockB
+        swap.blockB.column = columnA
+        swap.blockB.row = rowA
+
+        blocks[rowB][columnB] = swap.blockA
+        swap.blockA.column = columnB
+        swap.blockA.row = rowB
     }
 }

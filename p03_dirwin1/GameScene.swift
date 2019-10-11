@@ -12,11 +12,14 @@ class GameScene: SKScene {
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
+    private var swipeFromColumn: Int?
+    private var swipeFromRow: Int?
+    var swipeHandler: ((Swap) -> Void)?
     
     var level: Level!
 
-    let tileWidth: CGFloat = 96.0
-    let tileHeight: CGFloat = 96.0
+    let tileWidth: CGFloat = 64.0
+    let tileHeight: CGFloat = 64.0
 
     let gameLayer = SKNode()
     let blocksLayer = SKNode()
@@ -58,6 +61,16 @@ class GameScene: SKScene {
       return CGPoint(
         x: CGFloat(column) * tileWidth + tileWidth / 2,
         y: CGFloat(row) * tileHeight + tileHeight / 2)
+    }
+    
+    private func convertPoint(_ point: CGPoint) -> (success: Bool, column: Int, row: Int) {
+        if point.x >= 0 && point.x < CGFloat(numColumns) * tileWidth &&
+            point.y >= 0 && point.y < CGFloat(numRows) * tileHeight {
+            return (true, Int(point.x / tileWidth), Int(point.y / tileHeight))
+        }
+        else {
+            return (false, 0, 0)  // invalid location
+        }
     }
     
     override func didMove(to view: SKView) {
@@ -108,23 +121,90 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: blocksLayer)
+
+        let (success, column, row) = convertPoint(location)
+        if success {
+            if let block = level.block(atColumn: column, row: row) {
+                swipeFromColumn = column
+                swipeFromRow = row
+            }
         }
-        
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+        guard swipeFromColumn != nil else { return }
+
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: blocksLayer)
+
+        let (success, column, row) = convertPoint(location)
+        if success {
+            var horizontalDelta = 0, verticalDelta = 0
+            if column < swipeFromColumn! {          // swipe left
+                horizontalDelta = -1
+            } else if column > swipeFromColumn! {   // swipe right
+                horizontalDelta = 1
+            } else if row < swipeFromRow! {         // swipe down
+                verticalDelta = -1
+            } else if row > swipeFromRow! {         // swipe up
+                verticalDelta = 1
+            }
+
+            if horizontalDelta != 0 || verticalDelta != 0 {
+              trySwap(horizontalDelta: horizontalDelta, verticalDelta: verticalDelta)
+
+              // 5
+              swipeFromColumn = nil
+            }
+        }
+    }
+    
+    private func trySwap(horizontalDelta: Int, verticalDelta: Int) {
+      let toColumn = swipeFromColumn! + horizontalDelta
+      let toRow = swipeFromRow! + verticalDelta
+
+      guard toColumn >= 0 && toColumn < numColumns else { return }
+      guard toRow >= 0 && toRow < numRows else { return }
+
+      if let toBlock = level.block(atColumn: toColumn, row: toRow),
+        let fromBlock = level.block(atColumn: swipeFromColumn!, row: swipeFromRow!) {
+            //swap here
+            if let handler = swipeHandler{
+                let swap = Swap(blockA: fromBlock, blockB: toBlock)
+                handler(swap)
+            }
+      }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+      swipeFromColumn = nil
+      swipeFromRow = nil
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+      touchesEnded(touches, with: event)
     }
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    func animate(_ swap: Swap, completion: @escaping () -> Void) {
+        let spriteA = swap.blockA.sprite!
+        let spriteB = swap.blockB.sprite!
+
+        spriteA.zPosition = 100
+        spriteB.zPosition = 90
+
+        let duration: TimeInterval = 0.3
+
+        let moveA = SKAction.move(to: spriteB.position, duration: duration)
+        moveA.timingMode = .easeOut
+        spriteA.run(moveA, completion: completion)
+
+        let moveB = SKAction.move(to: spriteA.position, duration: duration)
+        moveB.timingMode = .easeOut
+        spriteB.run(moveB)
+
+        //run(swapSound)
     }
     
     

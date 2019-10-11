@@ -27,25 +27,37 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
+            super.viewDidLoad()
+            
+            // Configure the view
+            let skView = view as! SKView
+            skView.isMultipleTouchEnabled = false
+            
             level = Level()
+            
+            // Create and configure the scene.
+            scene = GameScene(size: skView.bounds.size)
+            scene.scaleMode = .aspectFill
             scene.level = level
-            
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
-            
-            view.ignoresSiblingOrder = true
+            scene.swipeHandler = handleSwipe
             
             view.showsFPS = true
             view.showsNodeCount = true
             
             beginGame()
+            
+            // Present the scene.
+            skView.presentScene(scene)
         }
+    }
+    
+    func handleSwipe(_ swap: Swap) {
+      view.isUserInteractionEnabled = false
+
+      level.performSwap(swap)
+      scene.animate(swap) {
+            self.view.isUserInteractionEnabled = true
+      }
     }
 
     override var shouldAutorotate: Bool {
