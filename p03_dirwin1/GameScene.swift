@@ -15,6 +15,7 @@ class GameScene: SKScene {
     private var swipeFromColumn: Int?
     private var swipeFromRow: Int?
     var swipeHandler: ((Swap) -> Void)?
+    private var selectionSprite = SKSpriteNode()
     
     var level: Level!
 
@@ -55,6 +56,27 @@ class GameScene: SKScene {
             blocksLayer.addChild(sprite)
             block.sprite = sprite
         }
+    }
+    
+    func showSelectionIndicator(of block: Block) {
+        if selectionSprite.parent != nil {
+            selectionSprite.removeFromParent()
+        }
+
+        if let sprite = block.sprite {
+            let texture = SKTexture(imageNamed: block.blockType.highlightedSpriteName)
+            selectionSprite.size = CGSize(width: tileWidth, height: tileHeight)
+            selectionSprite.run(SKAction.setTexture(texture))
+
+            sprite.addChild(selectionSprite)
+            selectionSprite.alpha = 1.0
+        }
+    }
+    
+    func hideSelectionIndicator() {
+        selectionSprite.run(SKAction.sequence([
+            SKAction.fadeOut(withDuration: 0.3),
+            SKAction.removeFromParent()]))
     }
 
     private func pointFor(column: Int, row: Int) -> CGPoint {
@@ -127,6 +149,7 @@ class GameScene: SKScene {
         let (success, column, row) = convertPoint(location)
         if success {
             if let block = level.block(atColumn: column, row: row) {
+                showSelectionIndicator(of: block)
                 swipeFromColumn = column
                 swipeFromRow = row
             }
@@ -139,36 +162,30 @@ class GameScene: SKScene {
         guard let touch = touches.first else { return }
         let location = touch.location(in: blocksLayer)
 
-        let (success, column, row) = convertPoint(location)
+        let (success, column, _) = convertPoint(location)
         if success {
-            var horizontalDelta = 0, verticalDelta = 0
+            var horizontalDelta = 0
             if column < swipeFromColumn! {          // swipe left
                 horizontalDelta = -1
             } else if column > swipeFromColumn! {   // swipe right
                 horizontalDelta = 1
-            } else if row < swipeFromRow! {         // swipe down
-                verticalDelta = -1
-            } else if row > swipeFromRow! {         // swipe up
-                verticalDelta = 1
             }
 
-            if horizontalDelta != 0 || verticalDelta != 0 {
-              trySwap(horizontalDelta: horizontalDelta, verticalDelta: verticalDelta)
-
-              // 5
-              swipeFromColumn = nil
+            if horizontalDelta != 0 {
+                trySwap(horizontalDelta: horizontalDelta)
+                hideSelectionIndicator()
+                // 5
+                swipeFromColumn = nil
             }
         }
     }
     
-    private func trySwap(horizontalDelta: Int, verticalDelta: Int) {
+    private func trySwap(horizontalDelta: Int) {
       let toColumn = swipeFromColumn! + horizontalDelta
-      let toRow = swipeFromRow! + verticalDelta
-
+        
       guard toColumn >= 0 && toColumn < numColumns else { return }
-      guard toRow >= 0 && toRow < numRows else { return }
 
-      if let toBlock = level.block(atColumn: toColumn, row: toRow),
+      if let toBlock = level.block(atColumn: toColumn, row: swipeFromRow!),
         let fromBlock = level.block(atColumn: swipeFromColumn!, row: swipeFromRow!) {
             //swap here
             if let handler = swipeHandler{
@@ -179,8 +196,12 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-      swipeFromColumn = nil
-      swipeFromRow = nil
+        if selectionSprite.parent != nil && swipeFromColumn != nil {
+            hideSelectionIndicator()
+        }
+        
+        swipeFromColumn = nil
+        swipeFromRow = nil
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -190,17 +211,19 @@ class GameScene: SKScene {
     func animate(_ swap: Swap, completion: @escaping () -> Void) {
         let spriteA = swap.blockA.sprite!
         let spriteB = swap.blockB.sprite!
+        let posA = pointFor(column: swap.blockA.column, row: swap.blockA.row)
+        let posB = pointFor(column: swap.blockB.column, row: swap.blockB.row)
 
         spriteA.zPosition = 100
         spriteB.zPosition = 90
 
-        let duration: TimeInterval = 0.3
+        let duration: TimeInterval = 0.2
 
-        let moveA = SKAction.move(to: spriteB.position, duration: duration)
+        let moveA = SKAction.move(to: posA, duration: duration)
         moveA.timingMode = .easeOut
         spriteA.run(moveA, completion: completion)
 
-        let moveB = SKAction.move(to: spriteA.position, duration: duration)
+        let moveB = SKAction.move(to: posB, duration: duration)
         moveB.timingMode = .easeOut
         spriteB.run(moveB)
 

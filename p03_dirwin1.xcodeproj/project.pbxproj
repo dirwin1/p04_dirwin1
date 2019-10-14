@@ -19,6 +19,11 @@
 		D72321B0233BA7AF00ED8200 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D72321AF233BA7AF00ED8200 /* Assets.xcassets */; };
 		D72321B3233BA7AF00ED8200 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D72321B1233BA7AF00ED8200 /* LaunchScreen.storyboard */; };
 		D74080AF2350C93C006B46DF /* Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74080AE2350C93C006B46DF /* Swap.swift */; };
+		D74080B52354B668006B46DF /* water-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D74080B02354B668006B46DF /* water-Highlighted.png */; };
+		D74080B62354B668006B46DF /* electric-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D74080B12354B668006B46DF /* electric-Highlighted.png */; };
+		D74080B72354B668006B46DF /* fire-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D74080B22354B668006B46DF /* fire-Highlighted.png */; };
+		D74080B82354B668006B46DF /* grass-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D74080B32354B668006B46DF /* grass-Highlighted.png */; };
+		D74080B92354B668006B46DF /* spooky-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D74080B42354B668006B46DF /* spooky-Highlighted.png */; };
 		D755BA1D234784C40020A691 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D755BA1C234784C40020A691 /* Level.swift */; };
 		D755BA1F23478A3F0020A691 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D755BA1E23478A3F0020A691 /* GameScene.sks */; };
 		D755BA2323478AB00020A691 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D755BA2223478AB00020A691 /* GameScene.swift */; };
@@ -40,6 +45,11 @@
 		D72321B2233BA7AF00ED8200 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D72321B4233BA7AF00ED8200 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D74080AE2350C93C006B46DF /* Swap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swap.swift; sourceTree = "<group>"; };
+		D74080B02354B668006B46DF /* water-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "water-Highlighted.png"; sourceTree = "<group>"; };
+		D74080B12354B668006B46DF /* electric-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "electric-Highlighted.png"; sourceTree = "<group>"; };
+		D74080B22354B668006B46DF /* fire-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire-Highlighted.png"; sourceTree = "<group>"; };
+		D74080B32354B668006B46DF /* grass-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grass-Highlighted.png"; sourceTree = "<group>"; };
+		D74080B42354B668006B46DF /* spooky-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spooky-Highlighted.png"; sourceTree = "<group>"; };
 		D755BA1C234784C40020A691 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		D755BA1E23478A3F0020A691 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		D755BA2223478AB00020A691 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -60,6 +70,11 @@
 		D70F58F0234B817900F4AF18 /* Sprites.atlas */ = {
 			isa = PBXGroup;
 			children = (
+				D74080B12354B668006B46DF /* electric-Highlighted.png */,
+				D74080B22354B668006B46DF /* fire-Highlighted.png */,
+				D74080B32354B668006B46DF /* grass-Highlighted.png */,
+				D74080B42354B668006B46DF /* spooky-Highlighted.png */,
+				D74080B02354B668006B46DF /* water-Highlighted.png */,
 				D70F58F6234B822100F4AF18 /* fire.png */,
 				D70F58F4234B822100F4AF18 /* grass.png */,
 				D70F58F3234B822100F4AF18 /* spooky.png */,
@@ -163,15 +178,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D74080B72354B668006B46DF /* fire-Highlighted.png in Resources */,
 				D70F58F2234B820900F4AF18 /* electric.png in Resources */,
 				D72321AE233BA7A800ED8200 /* Main.storyboard in Resources */,
 				D755BA1F23478A3F0020A691 /* GameScene.sks in Resources */,
 				D72321B0233BA7AF00ED8200 /* Assets.xcassets in Resources */,
+				D74080B62354B668006B46DF /* electric-Highlighted.png in Resources */,
+				D74080B82354B668006B46DF /* grass-Highlighted.png in Resources */,
 				D70F58F8234B822100F4AF18 /* grass.png in Resources */,
 				D70F58FA234B822100F4AF18 /* fire.png in Resources */,
 				D70F58F9234B822100F4AF18 /* water.png in Resources */,
 				D72321B3233BA7AF00ED8200 /* LaunchScreen.storyboard in Resources */,
 				D72321A7233BA7A800ED8200 /* Actions.sks in Resources */,
+				D74080B92354B668006B46DF /* spooky-Highlighted.png in Resources */,
+				D74080B52354B668006B46DF /* water-Highlighted.png in Resources */,
 				D70F58F7234B822100F4AF18 /* spooky.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

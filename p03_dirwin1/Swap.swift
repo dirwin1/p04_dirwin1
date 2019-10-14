@@ -12,8 +12,8 @@ struct Swap: CustomStringConvertible {
   let blockB: Block
   
   init(blockA: Block, blockB: Block) {
-    self.blockA = blockA
-    self.blockB = blockB
+        self.blockA = blockA
+      self.blockB = blockB
   }
   
   var description: String {

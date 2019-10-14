@@ -15,32 +15,38 @@ class Level {
     private var blocks = [[Block?]](repeating: [Block?](repeating: nil, count: numColumns), count: numRows)
     
     func block(atColumn column: Int, row: Int) -> Block? {
-      precondition(column >= 0 && column < numColumns)
-      precondition(row >= 0 && row < numRows)
-      return blocks[row][column]
+        precondition(column >= 0 && column < numColumns)
+        precondition(row >= 0 && row < numRows)
+        return blocks[row][column]
     }
     
     func shuffle() -> Set<Block> {
-      return initializeBlocks()
+        return initializeBlocks()
     }
     
     private func initializeBlocks() -> Set<Block> {
-      var set: Set<Block> = []
+        var set: Set<Block> = []
 
-      // 1
-      for row in 0..<numRows {
-        for column in 0..<numColumns {
+        // 1
+        for row in 0..<numRows {
+            for column in 0..<numColumns {
+                //make sure we don't create any chains to begin with
+                var blockType: BlockType
+                
+                repeat {
+                  blockType = BlockType.random()
+                } while (column >= 2 &&
+                    blocks[row][column - 1]?.blockType == blockType &&
+                    blocks[row][column - 2]?.blockType == blockType) ||
+                    (row >= 2 &&
+                    blocks[row - 1][column]?.blockType == blockType &&
+                    blocks[row - 2][column]?.blockType == blockType)
+                
+                let block = Block(column: column, row: row, blockType: blockType)
+                blocks[row][column] = block
 
-          // 2
-          let blockType = BlockType.random()
-
-          // 3
-          let block = Block(column: column, row: row, blockType: blockType)
-          blocks[row][column] = block
-
-          // 4
-          set.insert(block)
-        }
+                set.insert(block)
+            }
       }
       return set
     }
