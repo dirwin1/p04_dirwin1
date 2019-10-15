@@ -1,0 +1,140 @@
+commit 88fc08ddcbf8fd90994fe8dd1294e3283eb5d276
+Author: Dylan Irwin <dirwin4567@gmail.com>
+Date:   Tue Oct 15 11:40:58 2019 -0400
+
+    bug fixes
+
+ p03_dirwin1.xcodeproj/project.pbxproj    |   6 ++
+ p03_dirwin1/Assets.xcassets/electric.png | Bin 518 -> 533 bytes
+ p03_dirwin1/Assets.xcassets/grass.png    | Bin 520 -> 416 bytes
+ p03_dirwin1/Assets.xcassets/spooky.png   | Bin 562 -> 529 bytes
+ p03_dirwin1/GameScene.swift              | 158 +++++++++++++++----------------
+ p03_dirwin1/GameViewController.swift     |  26 +++--
+ p03_dirwin1/Level.swift                  | 158 ++++++++++++++++++++++++++++---
+ p03_dirwin1/Point.swift                  |  19 ++++
+ 8 files changed, 263 insertions(+), 104 deletions(-)
+
+commit d6dc7402b2a07271f60270fdb59de4f21bbeb51b
+Author: Dylan Irwin <dirwin4567@gmail.com>
+Date:   Mon Oct 14 15:37:59 2019 -0400
+
+    highlights
+
+ p03_dirwin1.xcodeproj/project.pbxproj | 20 +++++++++++
+ p03_dirwin1/GameScene.swift           | 65 ++++++++++++++++++++++++-----------
+ p03_dirwin1/GameViewController.swift  |  4 +--
+ p03_dirwin1/Level.swift               | 42 ++++++++++++----------
+ p03_dirwin1/Swap.swift                |  4 +--
+ 5 files changed, 92 insertions(+), 43 deletions(-)
+
+commit 7dff4c3fdd2f33444ed7a44267f264f39e20b30c
+Author: Dylan Irwin <dirwin4567@gmail.com>
+Date:   Fri Oct 11 10:38:17 2019 -0400
+
+    swapping blocks
+
+ p03_dirwin1.xcodeproj/project.pbxproj |   4 ++
+ p03_dirwin1/GameScene.swift           | 100 ++++++++++++++++++++++++++++++----
+ p03_dirwin1/GameViewController.swift  |  34 ++++++++----
+ p03_dirwin1/Level.swift               |  19 ++++++-
+ p03_dirwin1/Swap.swift                |  22 ++++++++
+ 5 files changed, 156 insertions(+), 23 deletions(-)
+
+commit ebc5c8f5445ac8387c47e4456eb0586fb633da8a
+Author: Dylan Irwin <dirwin4567@gmail.com>
+Date:   Mon Oct 7 10:38:11 2019 -0400
+
+    Still broken
+
+ p03_dirwin1.xcodeproj/project.pbxproj              |  28 +++++++++++++++++++++
+ .../Background.imageset/Background@3x.png          | Bin 0 -> 354496 bytes
+ .../Background.imageset/Contents.json              |  21 ++++++++++++++++
+ .../{ElectricBlock.png => electric.png}            | Bin
+ .../Assets.xcassets/{FireBlock.png => fire.png}    | Bin
+ .../Assets.xcassets/{GrassBlock.png => grass.png}  | Bin
+ .../{SpookyBlock.png => spooky.png}                | Bin
+ .../Assets.xcassets/{WaterBlock.png => water.png}  | Bin
+ p03_dirwin1/GameScene.swift                        |  23 ++++++++++++-----
+ p03_dirwin1/GameViewController.swift               |   5 ++--
+ 10 files changed, 68 insertions(+), 9 deletions(-)
+
+commit 78865d27a719b0284538c512ba52358d2eaa2e39
+Author: Dylan Irwin <dirwin4567@gmail.com>
+Date:   Fri Oct 4 10:41:29 2019 -0400
+
+    broken
+
+ p03_dirwin1.xcodeproj/project.pbxproj |  20 +++++++++------
+ p03_dirwin1/Block.swift               |  28 ++++++++++++++++++--
+ p03_dirwin1/GameScene.sks             | Bin 0 -> 4474 bytes
+ p03_dirwin1/GameScene.swift           |  38 +++++++++++++++++++++++++--
+ p03_dirwin1/GameViewController.swift  |  17 ++++++++++++
+ p03_dirwin1/Level.swift               |  47 ++++++++++++++++++++++++++++++++++
+ 6 files changed, 138 insertions(+), 12 deletions(-)
+
+commit b57aa7fff4e7b9d423c94fdf02e96874d4e52716
+Author: Dylan Irwin <dirwin4567@gmail.com>
+Date:   Wed Oct 2 11:59:26 2019 -0400
+
+    Blocks
+
+ p03_dirwin1.xcodeproj/project.pbxproj              |   4 +++
+ .../ElectricBlock.imageset/Contents.json           |  21 +++++++++++++
+ .../ElectricBlock.imageset/ElectricBlock.png       | Bin 0 -> 518 bytes
+ .../FireBlock.imageset/Contents.json               |  21 +++++++++++++
+ .../FireBlock.imageset/FireBlock.png               | Bin 0 -> 491 bytes
+ .../GrassBlock.imageset/Contents.json              |  21 +++++++++++++
+ .../GrassBlock.imageset/GrassBlock.png             | Bin 0 -> 520 bytes
+ .../WaterBlock.imageset/Contents.json              |  21 +++++++++++++
+ .../WaterBlock.imageset/WaterBlock.png             | Bin 0 -> 369 bytes
+ p03_dirwin1/Block.swift                            |  35 +++++++++++++++++++++
+ 10 files changed, 123 insertions(+)
+
+commit cd5992d3d3816e9b9eb5072d37938e9dba94c149
+Author: Dylan Irwin <dirwin4567@gmail.com>
+Date:   Fri Sep 27 10:41:31 2019 -0400
+
+    Some images
+
+ p03_dirwin1.xcodeproj/project.pbxproj              |   8 ++++----
+ p03_dirwin1/Assets.xcassets/ElectricBlock.png      | Bin 0 -> 518 bytes
+ p03_dirwin1/Assets.xcassets/FireBlock.png          | Bin 184 -> 491 bytes
+ p03_dirwin1/Assets.xcassets/GrassBlock.png         | Bin 0 -> 520 bytes
+ .../SpookyBlock.imageset/Contents.json             |  21 +++++++++++++++++++++
+ .../SpookyBlock.imageset/SpookyBlock.png           | Bin 0 -> 562 bytes
+ p03_dirwin1/Assets.xcassets/SpookyBlock.png        | Bin 0 -> 562 bytes
+ p03_dirwin1/Assets.xcassets/WaterBlock.png         | Bin 0 -> 369 bytes
+ p03_dirwin1/GameScene.sks                          | Bin 5939 -> 0 bytes
+ 9 files changed, 25 insertions(+), 4 deletions(-)
+
+commit 1872543b36f5f1bea5ad2b0d6d2e80f1d310f2ca
+Author: Dylan Irwin <dirwin4567@gmail.com>
+Date:   Wed Sep 25 10:38:55 2019 -0400
+
+    Readme
+
+ p03_dirwin1/Assets.xcassets/FireBlock.png | Bin 0 -> 184 bytes
+ p03_dirwin1/GameScene.sks                 | Bin 4694 -> 5939 bytes
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit c1e06ac0ce33457ff4bdb8733098aadf5f86989c
+Author: Dylan Irwin <dirwin4567@gmail.com>
+Date:   Wed Sep 25 09:48:39 2019 -0400
+
+    Initial Commit
+
+ p03_dirwin1.xcodeproj/project.pbxproj              | 351 +++++++++++++++++++++
+ .../project.xcworkspace/contents.xcworkspacedata   |   7 +
+ .../xcshareddata/IDEWorkspaceChecks.plist          |   8 +
+ .../xcschemes/xcschememanagement.plist             |  14 +
+ p03_dirwin1/Actions.sks                            | Bin 0 -> 1892 bytes
+ p03_dirwin1/AppDelegate.swift                      |  41 +++
+ .../AppIcon.appiconset/Contents.json               |  98 ++++++
+ p03_dirwin1/Assets.xcassets/Contents.json          |   6 +
+ p03_dirwin1/Base.lproj/LaunchScreen.storyboard     |  25 ++
+ p03_dirwin1/Base.lproj/Main.storyboard             |  24 ++
+ p03_dirwin1/GameScene.sks                          | Bin 0 -> 4694 bytes
+ p03_dirwin1/GameScene.swift                        |  89 ++++++
+ p03_dirwin1/GameViewController.swift               |  50 +++
+ p03_dirwin1/Info.plist                             |  47 +++
+ 14 files changed, 760 insertions(+)
