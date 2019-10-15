@@ -24,6 +24,7 @@
 		D74080B72354B668006B46DF /* fire-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D74080B22354B668006B46DF /* fire-Highlighted.png */; };
 		D74080B82354B668006B46DF /* grass-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D74080B32354B668006B46DF /* grass-Highlighted.png */; };
 		D74080B92354B668006B46DF /* spooky-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D74080B42354B668006B46DF /* spooky-Highlighted.png */; };
+		D74080BB23552A3A006B46DF /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74080BA23552A3A006B46DF /* Point.swift */; };
 		D755BA1D234784C40020A691 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D755BA1C234784C40020A691 /* Level.swift */; };
 		D755BA1F23478A3F0020A691 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D755BA1E23478A3F0020A691 /* GameScene.sks */; };
 		D755BA2323478AB00020A691 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D755BA2223478AB00020A691 /* GameScene.swift */; };
@@ -50,6 +51,7 @@
 		D74080B22354B668006B46DF /* fire-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire-Highlighted.png"; sourceTree = "<group>"; };
 		D74080B32354B668006B46DF /* grass-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grass-Highlighted.png"; sourceTree = "<group>"; };
 		D74080B42354B668006B46DF /* spooky-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spooky-Highlighted.png"; sourceTree = "<group>"; };
+		D74080BA23552A3A006B46DF /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		D755BA1C234784C40020A691 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		D755BA1E23478A3F0020A691 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		D755BA2223478AB00020A691 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				D72321B4233BA7AF00ED8200 /* Info.plist */,
 				D7DF521D2344F06F00856752 /* Block.swift */,
 				D755BA1C234784C40020A691 /* Level.swift */,
+				D74080BA23552A3A006B46DF /* Point.swift */,
 				D74080AE2350C93C006B46DF /* Swap.swift */,
 			);
 			path = p03_dirwin1;
@@ -207,6 +210,7 @@
 				D7DF521E2344F06F00856752 /* Block.swift in Sources */,
 				D74080AF2350C93C006B46DF /* Swap.swift in Sources */,
 				D72321AB233BA7A800ED8200 /* GameViewController.swift in Sources */,
+				D74080BB23552A3A006B46DF /* Point.swift in Sources */,
 				D755BA1D234784C40020A691 /* Level.swift in Sources */,
 				D72321A3233BA7A800ED8200 /* AppDelegate.swift in Sources */,
 			);
@@ -355,6 +359,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J8CH8K2H67;
 				INFOPLIST_FILE = p03_dirwin1/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -373,6 +378,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J8CH8K2H67;
 				INFOPLIST_FILE = p03_dirwin1/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

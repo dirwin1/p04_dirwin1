@@ -40,6 +40,7 @@ class GameViewController: UIViewController {
             scene.scaleMode = .aspectFill
             scene.level = level
             scene.swipeHandler = handleSwipe
+            scene.fallHandler = handleFall
             
             view.showsFPS = true
             view.showsNodeCount = true
@@ -51,13 +52,24 @@ class GameViewController: UIViewController {
         }
     }
     
-    func handleSwipe(_ swap: Swap) {
-      //view.isUserInteractionEnabled = false
-
-      level.performSwap(swap)
-      scene.animate(swap) {
-            //self.view.isUserInteractionEnabled = true
-      }
+    func handleSwipe(from: Point, to: Point) {
+        scene.animateSwap(from: from, to: to) {
+            self.level.performSwap(from: from, to: to)
+            let match = self.level.removeMatches(from: from, to: to)
+            self.scene.animateMatchedBlocks(for: match){
+                self.level.removeBlocks(in: match)
+            }
+        }
+    }
+    
+    func handleFall(){
+        let sets = level.fall()
+        let fallen = sets.0
+        let match = sets.1
+        scene.animateFallenBlocks(for: fallen)
+        self.scene.animateMatchedBlocks(for: match){
+            self.level.removeBlocks(in: match)
+        }
     }
 
     override var shouldAutorotate: Bool {
