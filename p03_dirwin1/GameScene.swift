@@ -197,10 +197,10 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        //if fallCounter == 1 {
+        if fallCounter == 1 {
             fallHandler!()
-        //}
-        //fallCounter = (fallCounter + 1) % 2
+        }
+        fallCounter = (fallCounter + 1) % 2
     }
     
     func animateMatchedBlocks(for blocks: Set<Block>, completion: @escaping () -> Void) {

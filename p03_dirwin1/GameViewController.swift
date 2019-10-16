@@ -53,12 +53,26 @@ class GameViewController: UIViewController {
     }
     
     func handleSwipe(from: Point, to: Point) {
+        //first make sure we can swap these blocks
+        if(level.isLocked(pos: from) || level.isLocked(pos: to)){
+            return
+        }
+        
+        //if not locked, then lock them so we can swap
+        level.lockPosition(pos: from)
+        level.lockPosition(pos: to)
+        
+        //animate and wait for the animation to finish to update the level
         scene.animateSwap(from: from, to: to) {
+            //update the data
             self.level.performSwap(from: from, to: to)
+            //unlock the positions that we swapped with
+            self.level.unlockPosition(pos: from)
+            self.level.unlockPosition(pos: to)
+            
+            //now check for matches
             let match = self.level.removeMatches(from: from, to: to)
-            self.scene.animateMatchedBlocks(for: match){
-                self.level.removeBlocks(in: match)
-            }
+            self.handleMatches(match: match)
         }
     }
     
@@ -67,8 +81,26 @@ class GameViewController: UIViewController {
         let fallen = sets.0
         let match = sets.1
         scene.animateFallenBlocks(for: fallen)
+        handleMatches(match: match)
+    }
+    
+    private func handleMatches(match: Set<Block>){
+        //lock all match positions
+        var matchPositions: Set<Point> = []
+        for block in match{
+            let col = block.column
+            let row = block.row
+            let pos = Point(x: col, y: row)
+            matchPositions.insert(pos)
+        }
+        self.level.lockPosition(positions: matchPositions)
+        
+        //animate match
         self.scene.animateMatchedBlocks(for: match){
+            //remove matches
             self.level.removeBlocks(in: match)
+            //unlock the match position
+            self.level.unlockPosition(positions: matchPositions)
         }
     }
 

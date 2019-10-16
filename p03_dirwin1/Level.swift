@@ -14,6 +14,7 @@ let numRows = 12
 
 class Level {
     private var blocks = [[Block?]](repeating: [Block?](repeating: nil, count: numColumns), count: numRows)
+    private var lockedPositions : Set<Point> = []
     
     func block(atColumn column: Int, row: Int) -> Block? {
         if(column < 0 || column >= numColumns){
@@ -23,6 +24,28 @@ class Level {
             return nil
         }
         return blocks[row][column]
+    }
+    
+    func isLocked(pos: Point) -> Bool{
+        return lockedPositions.contains(pos)
+    }
+    
+    func lockPosition(pos: Point){
+        lockedPositions.insert(pos)
+    }
+    
+    func lockPosition(positions: Set<Point>){
+        lockedPositions = lockedPositions.union(positions)
+    }
+    
+    func unlockPosition(pos: Point){
+        lockedPositions.remove(pos)
+    }
+    
+    func unlockPosition(positions: Set<Point>){
+        for pos in positions{
+            lockedPositions.remove(pos)
+        }
     }
 
     func shuffle() -> Set<Block> {
@@ -34,7 +57,7 @@ class Level {
         var landedBoyes: Set<Block> = []
         for row in 0..<numRows{
             for col in 0..<numColumns{
-                if block(atColumn: col, row: row) == nil && block(atColumn: col, row: row + 1) != nil{
+                if block(atColumn: col, row: row) == nil && block(atColumn: col, row: row + 1) != nil && !isLocked(pos: Point(x: col, y: row)) && !isLocked(pos: Point(x: col, y: row + 1)){
                     //fall down
                     movedBoys.insert(blocks[row+1][col]!)
                     blocks[row][col] = blocks[row+1][col]
@@ -132,6 +155,10 @@ class Level {
         
         var i : Int = col - 1
         while(i >= 0){
+            if isLocked(pos: Point(x:i, y:row)){
+                break
+            }
+            
             if(blocks[row][i]?.blockType == blockType){
                 horizontal.insert(blocks[row][i]!)
             }
@@ -143,6 +170,10 @@ class Level {
         
         i = col + 1
         while(i < 6){
+            if isLocked(pos: Point(x:i, y:row)){
+                break
+            }
+            
             if(blocks[row][i]?.blockType == blockType){
                 horizontal.insert(blocks[row][i]!)
             }
@@ -155,6 +186,9 @@ class Level {
         //up
         i = row + 1
         while(i < 12){
+            if isLocked(pos: Point(x:col, y:i)){
+                break
+            }
             if(blocks[i][col]?.blockType == blockType){
                 vertical.insert(blocks[i][col]!)
             }
@@ -167,6 +201,10 @@ class Level {
         //down
         i = row - 1
         while(i >= 0){
+            if isLocked(pos: Point(x:col, y:i)){
+                break
+            }
+            
             if(blocks[i][col]?.blockType == blockType){
                 vertical.insert(blocks[i][col]!)
             }
