@@ -228,4 +228,12 @@ class GameScene: SKScene {
             }
         }
     }
+    
+    func animateLanding(for blocks: Set<Block>) {
+        for block in blocks{
+            if let sprite = block.sprite{
+                sprite.run(SKAction.animate(with: block.fallFrames, timePerFrame: 0.1, resize: false, restore: true))
+            }
+        }
+    }
 }

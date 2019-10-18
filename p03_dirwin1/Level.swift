@@ -52,9 +52,10 @@ class Level {
         return initializeBlocks()
     }
     
-    func fall() -> (Set<Block>, Set<Block>){
+    func fall() -> (Set<Block>, Set<Block>, Set<Block>){
         var movedBoys: Set<Block> = []
         var landedBoyes: Set<Block> = []
+        var matchedBoyes: Set<Block> = []
         for row in 0..<numRows{
             for col in 0..<numColumns{
                 if block(atColumn: col, row: row) == nil && block(atColumn: col, row: row + 1) != nil && !isLocked(pos: Point(x: col, y: row)) && !isLocked(pos: Point(x: col, y: row + 1)){
@@ -66,12 +67,20 @@ class Level {
                     blocks[row+1][col] = nil
                     
                     if(row == 0 || blocks[row-1][col] != nil){
-                        landedBoyes = landedBoyes.union(checkForMatch(at: Point(x: col, y: row)))
+                        if(blocks[row-1][col] != nil){
+                            //check if grounded
+                            landedBoyes.insert(blocks[row][col]!)
+                        }
+                        matchedBoyes = matchedBoyes.union(checkForMatch(at: Point(x: col, y: row)))
                     }
                 }
             }
         }
-        return (movedBoys, landedBoyes)
+        return (movedBoys, landedBoyes, matchedBoyes)
+    }
+    
+    func isGrounded(block : Block) -> Bool{
+        return false;
     }
     
     private func initializeBlocks() -> Set<Block> {

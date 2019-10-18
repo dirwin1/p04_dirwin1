@@ -79,8 +79,10 @@ class GameViewController: UIViewController {
     func handleFall(){
         let sets = level.fall()
         let fallen = sets.0
-        let match = sets.1
+        let landed = sets.1
+        let match = sets.2
         scene.animateFallenBlocks(for: fallen)
+        scene.animateLanding(for: landed)
         handleMatches(match: match)
     }
     
