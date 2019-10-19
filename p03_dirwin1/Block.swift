@@ -37,7 +37,9 @@ class Block : CustomStringConvertible, Hashable {
     var column : Int
     var blockType : BlockType
     var sprite: SKSpriteNode?
+    var origTexture: SKTexture
     var fallFrames: [SKTexture] = []
+    var falling: Bool = false
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(row)
@@ -58,12 +60,13 @@ class Block : CustomStringConvertible, Hashable {
         self.blockType = blockType
         
         //get animation files
-        let spriteAtlas = SKTextureAtlas(named: "Sprites")
+        //let spriteAtlas = SKTextureAtlas(named: "Sprites")
+        origTexture = SKTexture(imageNamed: blockType.spriteName)
         
-        let numImages = 3
+        let numImages = 4
         for i in 1...numImages {
             let spriteName = "\(blockType.spriteName)fall\(i)"
-            fallFrames.append(spriteAtlas.textureNamed(spriteName))
+            fallFrames.append(SKTexture(imageNamed: spriteName))
         }
     }
 }

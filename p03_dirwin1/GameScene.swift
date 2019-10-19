@@ -197,10 +197,10 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        if fallCounter == 1 {
+        //if fallCounter == 1 {
             fallHandler!()
-        }
-        fallCounter = (fallCounter + 1) % 2
+        //}
+        //fallCounter = (fallCounter + 1) % 2
     }
     
     func animateMatchedBlocks(for blocks: Set<Block>, completion: @escaping () -> Void) {
@@ -232,7 +232,10 @@ class GameScene: SKScene {
     func animateLanding(for blocks: Set<Block>) {
         for block in blocks{
             if let sprite = block.sprite{
-                sprite.run(SKAction.animate(with: block.fallFrames, timePerFrame: 0.1, resize: false, restore: true))
+                sprite.removeAction(forKey: "land")
+                sprite.texture = block.origTexture
+                sprite.run(SKAction.animate(with: block.fallFrames, timePerFrame: 0.04, resize: false,
+                                            restore: true), withKey: "land")
             }
         }
     }

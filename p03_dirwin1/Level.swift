@@ -66,12 +66,22 @@ class Level {
                     blocks[row][col]?.row = row
                     blocks[row+1][col] = nil
                     
-                    if(row == 0 || blocks[row-1][col] != nil){
-                        if(blocks[row-1][col] != nil){
-                            //check if grounded
-                            landedBoyes.insert(blocks[row][col]!)
-                        }
+                    if(row == 0){
+                        blocks[row][col]?.falling = false;
+                        landedBoyes.insert(blocks[row][col]!)
                         matchedBoyes = matchedBoyes.union(checkForMatch(at: Point(x: col, y: row)))
+                    }
+                    else if(blocks[row-1][col] != nil){
+                        //check for landing
+                        if(blocks[row-1][col]?.falling == false){
+                            blocks[row][col]?.falling = false;
+                            landedBoyes.insert(blocks[row][col]!)
+                            matchedBoyes = matchedBoyes.union(checkForMatch(at: Point(x: col, y: row)))
+                        }
+                    }
+                    else{
+                        //this block must be falling
+                        blocks[row][col]?.falling = true;
                     }
                 }
             }
