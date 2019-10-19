@@ -197,34 +197,52 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        //if fallCounter == 1 {
+        if fallCounter == 1 {
             fallHandler!()
-        //}
-        //fallCounter = (fallCounter + 1) % 2
+        }
+        fallCounter = (fallCounter + 1) % 2
     }
     
     func animateMatchedBlocks(for blocks: Set<Block>, completion: @escaping () -> Void) {
         for block in blocks {
             if let sprite = block.sprite {
                 if sprite.action(forKey: "removing") == nil {
-                    let scaleAction = SKAction.scale(to: 0.1, duration: 1)
-                    scaleAction.timingMode = .easeOut
-                    sprite.run(SKAction.sequence([scaleAction, SKAction.removeFromParent()]),
-                         withKey: "removing")
+                    //let scaleAction = SKAction.scale(to: 0.1, duration: 1)
+                    //scaleAction.timingMode = .easeOut
+                    //sprite.run(SKAction.sequence([scaleAction, SKAction.removeFromParent()]), withKey: "removing")
+                    sprite.removeAllActions()
+                    
+                    let flash = SKAction.animate(with: block.flashFrames, timePerFrame: 0.1, resize: false, restore: true)
+                    let shock = SKAction.run({
+                        sprite.texture = block.shockTexture
+                    })
+                    
+                    sprite.run(SKAction.sequence([flash, shock]))
+                    
+                   // sprite.run(SKAction.animate(with: block.flashFrames, timePerFrame: 0.1, resize: false, restore: true), withKey: "removing")
                 }
             }
         }
-        run(SKAction.wait(forDuration: 1.5), completion: completion)
+        var waitTime: Double = 0.15
+        for block in blocks{
+            if let sprite = block.sprite{
+                let wait = SKAction.wait(forDuration: 1 + waitTime)
+                let die = SKAction.removeFromParent()
+                sprite.run(SKAction.sequence([wait, die]))
+                waitTime += 0.15
+            }
+        }
+        run(SKAction.wait(forDuration: 1 + waitTime), completion: completion)
     }
     
     func animateFallenBlocks(for blocks: Set<Block>){
         for block in blocks{
             if let sprite = block.sprite{
-                sprite.position = pointFor(column: block.column, row: block.row)
-                //let pos = pointFor(column: block.column, row: block.row)
-                //let move = SKAction.move(to: pos, duration: 0.05)
+                //sprite.position = pointFor(column: block.column, row: block.row)
+                let pos = pointFor(column: block.column, row: block.row)
+                let move = SKAction.move(to: pos, duration: 0.05)
                 //move.timingMode = .easeOut
-                //sprite.run(move)
+                sprite.run(move)
             }
         }
     }

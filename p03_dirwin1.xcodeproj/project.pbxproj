@@ -48,6 +48,16 @@
 		D7D80CC9235BA2D8002A2A45 /* spookyfall2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CC5235BA2D7002A2A45 /* spookyfall2.png */; };
 		D7D80CCA235BA2D8002A2A45 /* spookyfall4.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CC6235BA2D8002A2A45 /* spookyfall4.png */; };
 		D7D80CCB235BA2D8002A2A45 /* spookyfall1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CC7235BA2D8002A2A45 /* spookyfall1.png */; };
+		D7D80CD1235BA76D002A2A45 /* fireflash.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CCC235BA76C002A2A45 /* fireflash.png */; };
+		D7D80CD2235BA76D002A2A45 /* grassflash.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CCD235BA76C002A2A45 /* grassflash.png */; };
+		D7D80CD3235BA76D002A2A45 /* electricflash.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CCE235BA76C002A2A45 /* electricflash.png */; };
+		D7D80CD4235BA76D002A2A45 /* spookyflash.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CCF235BA76D002A2A45 /* spookyflash.png */; };
+		D7D80CD5235BA76D002A2A45 /* waterflash.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CD0235BA76D002A2A45 /* waterflash.png */; };
+		D7D80CDB235BAC06002A2A45 /* electricshock.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CD6235BAC06002A2A45 /* electricshock.png */; };
+		D7D80CDC235BAC06002A2A45 /* watershock.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CD7235BAC06002A2A45 /* watershock.png */; };
+		D7D80CDD235BAC06002A2A45 /* spookyshock.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CD8235BAC06002A2A45 /* spookyshock.png */; };
+		D7D80CDE235BAC06002A2A45 /* fireshock.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CD9235BAC06002A2A45 /* fireshock.png */; };
+		D7D80CDF235BAC06002A2A45 /* grassshock.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CDA235BAC06002A2A45 /* grassshock.png */; };
 		D7DF521E2344F06F00856752 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF521D2344F06F00856752 /* Block.swift */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +105,16 @@
 		D7D80CC5235BA2D7002A2A45 /* spookyfall2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spookyfall2.png; sourceTree = "<group>"; };
 		D7D80CC6235BA2D8002A2A45 /* spookyfall4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spookyfall4.png; sourceTree = "<group>"; };
 		D7D80CC7235BA2D8002A2A45 /* spookyfall1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spookyfall1.png; sourceTree = "<group>"; };
+		D7D80CCC235BA76C002A2A45 /* fireflash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireflash.png; sourceTree = "<group>"; };
+		D7D80CCD235BA76C002A2A45 /* grassflash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grassflash.png; sourceTree = "<group>"; };
+		D7D80CCE235BA76C002A2A45 /* electricflash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = electricflash.png; sourceTree = "<group>"; };
+		D7D80CCF235BA76D002A2A45 /* spookyflash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spookyflash.png; sourceTree = "<group>"; };
+		D7D80CD0235BA76D002A2A45 /* waterflash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waterflash.png; sourceTree = "<group>"; };
+		D7D80CD6235BAC06002A2A45 /* electricshock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = electricshock.png; sourceTree = "<group>"; };
+		D7D80CD7235BAC06002A2A45 /* watershock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watershock.png; sourceTree = "<group>"; };
+		D7D80CD8235BAC06002A2A45 /* spookyshock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spookyshock.png; sourceTree = "<group>"; };
+		D7D80CD9235BAC06002A2A45 /* fireshock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireshock.png; sourceTree = "<group>"; };
+		D7D80CDA235BAC06002A2A45 /* grassshock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grassshock.png; sourceTree = "<group>"; };
 		D7DF521D2344F06F00856752 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,6 +132,16 @@
 		D70F58F0234B817900F4AF18 /* Sprites.atlas */ = {
 			isa = PBXGroup;
 			children = (
+				D7D80CD6235BAC06002A2A45 /* electricshock.png */,
+				D7D80CD9235BAC06002A2A45 /* fireshock.png */,
+				D7D80CDA235BAC06002A2A45 /* grassshock.png */,
+				D7D80CD8235BAC06002A2A45 /* spookyshock.png */,
+				D7D80CD7235BAC06002A2A45 /* watershock.png */,
+				D7D80CCE235BA76C002A2A45 /* electricflash.png */,
+				D7D80CCC235BA76C002A2A45 /* fireflash.png */,
+				D7D80CCD235BA76C002A2A45 /* grassflash.png */,
+				D7D80CCF235BA76D002A2A45 /* spookyflash.png */,
+				D7D80CD0235BA76D002A2A45 /* waterflash.png */,
 				D7D80CC7235BA2D8002A2A45 /* spookyfall1.png */,
 				D7D80CC5235BA2D7002A2A45 /* spookyfall2.png */,
 				D7D80CC4235BA2D7002A2A45 /* spookyfall3.png */,
@@ -247,13 +277,18 @@
 				D70F58F2234B820900F4AF18 /* electric.png in Resources */,
 				D7D80CCA235BA2D8002A2A45 /* spookyfall4.png in Resources */,
 				D7D80CC2235BA2CF002A2A45 /* electricfall4.png in Resources */,
+				D7D80CDD235BAC06002A2A45 /* spookyshock.png in Resources */,
 				D72321AE233BA7A800ED8200 /* Main.storyboard in Resources */,
+				D7D80CDB235BAC06002A2A45 /* electricshock.png in Resources */,
+				D7D80CDF235BAC06002A2A45 /* grassshock.png in Resources */,
 				D7D80CC1235BA2CF002A2A45 /* electricfall2.png in Resources */,
 				D755BA1F23478A3F0020A691 /* GameScene.sks in Resources */,
 				D7D80CB8235BA076002A2A45 /* waterfall1.png in Resources */,
+				D7D80CD5235BA76D002A2A45 /* waterflash.png in Resources */,
 				D72321B0233BA7AF00ED8200 /* Assets.xcassets in Resources */,
 				D7D80CC9235BA2D8002A2A45 /* spookyfall2.png in Resources */,
 				D7D80CA82359FCF2002A2A45 /* firefall3.png in Resources */,
+				D7D80CD3235BA76D002A2A45 /* electricflash.png in Resources */,
 				D7D80CC3235BA2CF002A2A45 /* electricfall3.png in Resources */,
 				D74080B62354B668006B46DF /* electric-Highlighted.png in Resources */,
 				D74080B82354B668006B46DF /* grass-Highlighted.png in Resources */,
@@ -269,13 +304,18 @@
 				D7D80CC0235BA2CF002A2A45 /* electricfall1.png in Resources */,
 				D72321B3233BA7AF00ED8200 /* LaunchScreen.storyboard in Resources */,
 				D72321A7233BA7A800ED8200 /* Actions.sks in Resources */,
+				D7D80CD2235BA76D002A2A45 /* grassflash.png in Resources */,
 				D7D80CC8235BA2D8002A2A45 /* spookyfall3.png in Resources */,
 				D74080B92354B668006B46DF /* spooky-Highlighted.png in Resources */,
 				D74080B52354B668006B46DF /* water-Highlighted.png in Resources */,
 				D7D80CB0235B9F19002A2A45 /* grassfall1.png in Resources */,
+				D7D80CD1235BA76D002A2A45 /* fireflash.png in Resources */,
 				D70F58F7234B822100F4AF18 /* spooky.png in Resources */,
 				D7D80CAB235B9C73002A2A45 /* firefall4.png in Resources */,
 				D7D80CB3235B9F19002A2A45 /* grassfall4.png in Resources */,
+				D7D80CDC235BAC06002A2A45 /* watershock.png in Resources */,
+				D7D80CDE235BAC06002A2A45 /* fireshock.png in Resources */,
+				D7D80CD4235BA76D002A2A45 /* spookyflash.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
