@@ -197,10 +197,10 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        if fallCounter == 1 {
+        //if fallCounter == 1 {
             fallHandler!()
-        }
-        fallCounter = (fallCounter + 1) % 2
+        //}
+        //fallCounter = (fallCounter + 1) % 2
     }
     
     func animateMatchedBlocks(for blocks: Set<Block>, completion: @escaping () -> Void) {
@@ -235,14 +235,19 @@ class GameScene: SKScene {
         run(SKAction.wait(forDuration: 1 + waitTime), completion: completion)
     }
     
-    func animateFallenBlocks(for blocks: Set<Block>){
+    func animateFallenBlocks(for blocks: Set<Block>, completion: @escaping () -> Void){
         for block in blocks{
             if let sprite = block.sprite{
                 //sprite.position = pointFor(column: block.column, row: block.row)
+                //block.falling = true
                 let pos = pointFor(column: block.column, row: block.row)
-                let move = SKAction.move(to: pos, duration: 0.05)
+                let move = SKAction.move(to: pos, duration: 0.2)
+                //let flag = SKAction.run({
+                    //block.falling = false
+                //})
                 //move.timingMode = .easeOut
-                sprite.run(move)
+                //sprite.run(SKAction.sequence([move, flag]), completion: completion)
+                sprite.run(move, completion: completion)
             }
         }
     }

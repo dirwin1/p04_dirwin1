@@ -52,13 +52,30 @@ class Level {
         return initializeBlocks()
     }
     
-    func fall() -> (Set<Block>, Set<Block>, Set<Block>){
+    func startFall() -> Set<Block>{
+        var fallingBoyes: Set<Block> = []
+        for row in 0..<numRows{
+            for col in 0..<numColumns{
+                if block(atColumn: col, row: row) == nil && block(atColumn: col, row: row + 1) != nil && block(atColumn: col, row: row + 1)?.falling == false && !isLocked(pos: Point(x: col, y: row)) && !isLocked(pos: Point(x: col, y: row + 1)){
+                    //fall down
+                    block(atColumn: col, row: row + 1)?.falling = true
+                    fallingBoyes.insert(block(atColumn: col, row: row + 1)!)
+                }
+            }
+        }
+        return fallingBoyes
+    }
+    
+    func completefall(falling: Set<Block>) -> (Set<Block>, Set<Block>, Set<Block>){
         var movedBoys: Set<Block> = []
         var landedBoyes: Set<Block> = []
         var matchedBoyes: Set<Block> = []
         for row in 0..<numRows{
             for col in 0..<numColumns{
-                if block(atColumn: col, row: row) == nil && block(atColumn: col, row: row + 1) != nil && !isLocked(pos: Point(x: col, y: row)) && !isLocked(pos: Point(x: col, y: row + 1)){
+                if block(atColumn: col, row: row) == nil && block(atColumn: col, row: row + 1) != nil
+                    && falling.contains(block(atColumn: col, row: row + 1)!)
+                    && !isLocked(pos: Point(x: col, y: row)) && !isLocked(pos: Point(x: col, y: row + 1)) {
+                    
                     //fall down
                     movedBoys.insert(blocks[row+1][col]!)
                     blocks[row][col] = blocks[row+1][col]

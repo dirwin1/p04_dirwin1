@@ -30,7 +30,7 @@ class GameViewController: UIViewController {
             super.viewDidLoad()
             
             // Configure the view
-            let skView = view as! SKView
+            let skView = view
             skView.isMultipleTouchEnabled = false
             
             level = Level()
@@ -77,13 +77,20 @@ class GameViewController: UIViewController {
     }
     
     func handleFall(){
-        let sets = level.fall()
-        let fallen = sets.0
-        let landed = sets.1
-        let match = sets.2
-        scene.animateFallenBlocks(for: fallen)
-        scene.animateLanding(for: landed)
-        handleMatches(match: match)
+        let newFallers = level.startFall()
+        fall(falling: newFallers)
+    }
+    
+    func fall(falling: Set<Block>){
+        scene.animateFallenBlocks(for: falling, completion: {
+            let sets = self.level.completefall(falling: falling)
+            let fallen = sets.0
+            let landed = sets.1
+            let match = sets.2
+            self.scene.animateLanding(for: landed)
+            self.handleMatches(match: match)
+            self.fall(falling: fallen)
+        })
     }
     
     private func handleMatches(match: Set<Block>){
