@@ -66,14 +66,13 @@ class Level {
         return fallingBoyes
     }
     
-    func completefall(falling: Set<Block>) -> (Set<Block>, Set<Block>, Set<Block>){
+    func fall() -> (Set<Block>, Set<Block>, Set<Block>){
         var movedBoys: Set<Block> = []
         var landedBoyes: Set<Block> = []
         var matchedBoyes: Set<Block> = []
         for row in 0..<numRows{
             for col in 0..<numColumns{
                 if block(atColumn: col, row: row) == nil && block(atColumn: col, row: row + 1) != nil
-                    && falling.contains(block(atColumn: col, row: row + 1)!)
                     && !isLocked(pos: Point(x: col, y: row)) && !isLocked(pos: Point(x: col, y: row + 1)) {
                     
                     //fall down

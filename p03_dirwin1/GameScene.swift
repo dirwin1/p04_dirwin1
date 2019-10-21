@@ -238,16 +238,16 @@ class GameScene: SKScene {
     func animateFallenBlocks(for blocks: Set<Block>, completion: @escaping () -> Void){
         for block in blocks{
             if let sprite = block.sprite{
-                //sprite.position = pointFor(column: block.column, row: block.row)
+                sprite.position = pointFor(column: block.column, row: block.row)
                 //block.falling = true
-                let pos = pointFor(column: block.column, row: block.row)
-                let move = SKAction.move(to: pos, duration: 0.2)
+                //let pos = pointFor(column: block.column, row: block.row)
+                //let move = SKAction.move(to: pos, duration: 0.01)
                 //let flag = SKAction.run({
                     //block.falling = false
                 //})
                 //move.timingMode = .easeOut
                 //sprite.run(SKAction.sequence([move, flag]), completion: completion)
-                sprite.run(move, completion: completion)
+                //sprite.run(move, completion: completion)
             }
         }
     }
@@ -257,7 +257,7 @@ class GameScene: SKScene {
             if let sprite = block.sprite{
                 sprite.removeAction(forKey: "land")
                 sprite.texture = block.origTexture
-                sprite.run(SKAction.animate(with: block.fallFrames, timePerFrame: 0.04, resize: false,
+                sprite.run(SKAction.animate(with: block.fallFrames, timePerFrame: 0.05, resize: false,
                                             restore: true), withKey: "land")
             }
         }

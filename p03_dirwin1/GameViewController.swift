@@ -77,11 +77,19 @@ class GameViewController: UIViewController {
     }
     
     func handleFall(){
-        let newFallers = level.startFall()
-        fall(falling: newFallers)
+        //let newFallers = level.startFall()
+        //fall(falling: newFallers)
+        let sets = level.fall()
+        let fallen = sets.0
+        let landed = sets.1
+        let match = sets.2
+        scene.animateFallenBlocks(for: fallen, completion: {})
+        scene.animateLanding(for: landed)
+        handleMatches(match: match)
     }
     
     func fall(falling: Set<Block>){
+        /*
         scene.animateFallenBlocks(for: falling, completion: {
             let sets = self.level.completefall(falling: falling)
             let fallen = sets.0
@@ -91,6 +99,7 @@ class GameViewController: UIViewController {
             self.handleMatches(match: match)
             self.fall(falling: fallen)
         })
+         */
     }
     
     private func handleMatches(match: Set<Block>){
