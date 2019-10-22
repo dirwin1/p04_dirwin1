@@ -13,6 +13,7 @@ import GameplayKit
 class GameViewController: UIViewController {
     var scene: GameScene!
     var level: Level!
+    var height: Int = 0
     
     func beginGame() {
       shuffle()
@@ -41,6 +42,7 @@ class GameViewController: UIViewController {
             scene.level = level
             scene.swipeHandler = handleSwipe
             scene.fallHandler = handleFall
+            scene.moveHandler = handleMove
             
             view.showsFPS = true
             view.showsNodeCount = true
@@ -119,6 +121,16 @@ class GameViewController: UIViewController {
             self.level.removeBlocks(in: match)
             //unlock the match position
             self.level.unlockPosition(positions: matchPositions)
+        }
+    }
+    
+    private func handleMove(){
+        height = (height + 1) % 100
+        scene.moveBoard(height: height)
+        if(height == 0){
+            //need to add a new row
+            let moved = level.addRow()
+            scene.animateFallenBlocks(for: moved, completion:{})
         }
     }
 

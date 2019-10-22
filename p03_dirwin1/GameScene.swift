@@ -9,13 +9,11 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
     private var swipeFromColumn: Int?
     private var swipeFromRow: Int?
     var swipeHandler: ((Point, Point) -> Void)?
     var fallHandler: (() -> Void)?
+    var moveHandler: (() -> Void)?
     private var selectionSprite = SKSpriteNode()
     private var fallCounter: Int = 0
     
@@ -143,6 +141,15 @@ class GameScene: SKScene {
         }
     }
     
+    func moveBoard(height: Int){
+        let h = CGFloat(height)/100.0
+        let xPos = -tileWidth * CGFloat(numColumns) / 2
+        let yPos = -tileHeight * ((CGFloat(numRows) / 2) - h)
+        blocksLayer.position = CGPoint(
+        x: xPos,
+        y: yPos)
+    }
+    
     private func trySwap(horizontalDelta: Int) {
         let toColumn = swipeFromColumn! + horizontalDelta
         guard toColumn >= 0 && toColumn < numColumns else { return }
@@ -171,7 +178,7 @@ class GameScene: SKScene {
         let blockA = level.block(atColumn: from.x, row: from.y)
         let blockB = level.block(atColumn: to.x, row: to.y)
         
-        let duration: TimeInterval = 0.1
+        let duration: TimeInterval = 0.075
         
         if blockA != nil{
             let spriteA = blockA?.sprite!
@@ -190,7 +197,7 @@ class GameScene: SKScene {
             moveB.timingMode = .easeOut
             spriteB?.run(moveB)
         }
-        run(SKAction.wait(forDuration: 0.2), completion: completion)
+        run(SKAction.wait(forDuration: 0.15), completion: completion)
         //run(swapSound)
     }
     
@@ -199,6 +206,7 @@ class GameScene: SKScene {
         // Called before each frame is rendered
         //if fallCounter == 1 {
             fallHandler!()
+            moveHandler!()
         //}
         //fallCounter = (fallCounter + 1) % 2
     }

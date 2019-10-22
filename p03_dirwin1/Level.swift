@@ -266,4 +266,24 @@ class Level {
             blocks[block.row][block.column] = nil
         }
     }
+    
+    func addRow() -> Set<Block>{
+        var movedBoyes: Set<Block> = []
+        //move all of the boyes up
+        for row in (1..<numRows).reversed(){
+            for col in 0..<numColumns{
+                blocks[row][col] = blocks[row-1][col]
+                if(blocks[row][col] != nil){
+                    blocks[row][col]?.row = row
+                    movedBoyes.insert(blocks[row][col]!)
+                }
+            }
+        }
+        
+        for col in 0..<numColumns{
+            blocks[0][col] = nil
+        }
+        //fill the bottom up with randos
+        return movedBoyes
+    }
 }
