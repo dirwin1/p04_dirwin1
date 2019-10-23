@@ -79,8 +79,6 @@ class GameViewController: UIViewController {
     }
     
     func handleFall(){
-        //let newFallers = level.startFall()
-        //fall(falling: newFallers)
         let sets = level.fall()
         let fallen = sets.0
         let landed = sets.1
@@ -88,20 +86,6 @@ class GameViewController: UIViewController {
         scene.animateFallenBlocks(for: fallen, completion: {})
         scene.animateLanding(for: landed)
         handleMatches(match: match)
-    }
-    
-    func fall(falling: Set<Block>){
-        /*
-        scene.animateFallenBlocks(for: falling, completion: {
-            let sets = self.level.completefall(falling: falling)
-            let fallen = sets.0
-            let landed = sets.1
-            let match = sets.2
-            self.scene.animateLanding(for: landed)
-            self.handleMatches(match: match)
-            self.fall(falling: fallen)
-        })
-         */
     }
     
     private func handleMatches(match: Set<Block>){
@@ -125,12 +109,16 @@ class GameViewController: UIViewController {
     }
     
     private func handleMove(){
-        height = (height + 1) % 100
-        scene.moveBoard(height: height)
-        if(height == 0){
-            //need to add a new row
-            let moved = level.addRow()
-            scene.animateFallenBlocks(for: moved, completion:{})
+        if level.lockedPositions.isEmpty{
+            height = (height + 1) % 100
+            scene.moveBoard(height: height)
+            if(height == 0){
+                //need to add a new row
+                let moved = level.addRow()
+                scene.addSprites(for: moved.1)
+                scene.animateFallenBlocks(for: moved.0, completion:{})
+                handleMatches(match: moved.2)
+            }
         }
     }
 

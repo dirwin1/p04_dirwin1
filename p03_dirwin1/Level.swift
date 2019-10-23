@@ -14,7 +14,7 @@ let numRows = 12
 
 class Level {
     private var blocks = [[Block?]](repeating: [Block?](repeating: nil, count: numColumns), count: numRows)
-    private var lockedPositions : Set<Point> = []
+    var lockedPositions : Set<Point> = []
     
     func block(atColumn column: Int, row: Int) -> Block? {
         if(column < 0 || column >= numColumns){
@@ -103,10 +103,6 @@ class Level {
             }
         }
         return (movedBoys, landedBoyes, matchedBoyes)
-    }
-    
-    func isGrounded(block : Block) -> Bool{
-        return false;
     }
     
     private func initializeBlocks() -> Set<Block> {
@@ -267,8 +263,10 @@ class Level {
         }
     }
     
-    func addRow() -> Set<Block>{
+    func addRow() -> (Set<Block>, Set<Block>, Set<Block>){
         var movedBoyes: Set<Block> = []
+        var newBoyes: Set<Block> = []
+        var matchedBoyes: Set<Block> = []
         //move all of the boyes up
         for row in (1..<numRows).reversed(){
             for col in 0..<numColumns{
@@ -279,11 +277,29 @@ class Level {
                 }
             }
         }
-        
+        //add the new column
         for col in 0..<numColumns{
-            blocks[0][col] = nil
+            //make sure we don't create any horizontal matches
+            var t: BlockType = BlockType.random()
+            var keepLooking: Bool = true
+            while keepLooking {
+                if col >= 2 && blocks[0][col-1]?.blockType == t && blocks[0][col-2]?.blockType == t{
+                    t = BlockType.random()
+                }
+                else{
+                    keepLooking = false
+                }
+            }
+            blocks[0][col] = Block(column: col, row: 0, blockType: BlockType.random())
+            movedBoyes.insert(blocks[0][col]!)
+            newBoyes.insert(blocks[0][col]!)
         }
+        //check for matches on the new row
+        for col in 0..<numColumns{
+            matchedBoyes = matchedBoyes.union(checkForMatch(at: Point(x: col, y: 0)))
+        }
+        
         //fill the bottom up with randos
-        return movedBoyes
+        return (movedBoyes, newBoyes, matchedBoyes)
     }
 }

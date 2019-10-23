@@ -16,6 +16,8 @@ class GameScene: SKScene {
     var moveHandler: (() -> Void)?
     private var selectionSprite = SKSpriteNode()
     private var fallCounter: Int = 0
+    private var boardSpeed: Int = 1
+    private var moveCounter: Int = 0
     
     var level: Level!
 
@@ -178,7 +180,7 @@ class GameScene: SKScene {
         let blockA = level.block(atColumn: from.x, row: from.y)
         let blockB = level.block(atColumn: to.x, row: to.y)
         
-        let duration: TimeInterval = 0.075
+        let duration: TimeInterval = 0.05
         
         if blockA != nil{
             let spriteA = blockA?.sprite!
@@ -197,7 +199,7 @@ class GameScene: SKScene {
             moveB.timingMode = .easeOut
             spriteB?.run(moveB)
         }
-        run(SKAction.wait(forDuration: 0.15), completion: completion)
+        run(SKAction.wait(forDuration: 0.1), completion: completion)
         //run(swapSound)
     }
     
@@ -205,8 +207,11 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         //if fallCounter == 1 {
-            fallHandler!()
+        fallHandler!()
+        if(moveCounter == 0){
             moveHandler!()
+        }
+        moveCounter = (moveCounter + 1) % boardSpeed
         //}
         //fallCounter = (fallCounter + 1) % 2
     }
@@ -215,9 +220,6 @@ class GameScene: SKScene {
         for block in blocks {
             if let sprite = block.sprite {
                 if sprite.action(forKey: "removing") == nil {
-                    //let scaleAction = SKAction.scale(to: 0.1, duration: 1)
-                    //scaleAction.timingMode = .easeOut
-                    //sprite.run(SKAction.sequence([scaleAction, SKAction.removeFromParent()]), withKey: "removing")
                     sprite.removeAllActions()
                     
                     let flash = SKAction.animate(with: block.flashFrames, timePerFrame: 0.1, resize: false, restore: true)
@@ -226,8 +228,6 @@ class GameScene: SKScene {
                     })
                     
                     sprite.run(SKAction.sequence([flash, shock]))
-                    
-                   // sprite.run(SKAction.animate(with: block.flashFrames, timePerFrame: 0.1, resize: false, restore: true), withKey: "removing")
                 }
             }
         }
@@ -247,15 +247,6 @@ class GameScene: SKScene {
         for block in blocks{
             if let sprite = block.sprite{
                 sprite.position = pointFor(column: block.column, row: block.row)
-                //block.falling = true
-                //let pos = pointFor(column: block.column, row: block.row)
-                //let move = SKAction.move(to: pos, duration: 0.01)
-                //let flag = SKAction.run({
-                    //block.falling = false
-                //})
-                //move.timingMode = .easeOut
-                //sprite.run(SKAction.sequence([move, flag]), completion: completion)
-                //sprite.run(move, completion: completion)
             }
         }
     }
