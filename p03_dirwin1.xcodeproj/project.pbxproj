@@ -72,6 +72,19 @@
 		D7D80CF923614A92002A2A45 /* chain-8.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CF123614A91002A2A45 /* chain-8.png */; };
 		D7D80CFA23614A92002A2A45 /* chain-9.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CF223614A92002A2A45 /* chain-9.png */; };
 		D7D80CFB23614A92002A2A45 /* chain-7.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CF323614A92002A2A45 /* chain-7.png */; };
+		D7D80D062361FE87002A2A45 /* shine3.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CFC2361FE86002A2A45 /* shine3.png */; };
+		D7D80D072361FE87002A2A45 /* shine4.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CFD2361FE86002A2A45 /* shine4.png */; };
+		D7D80D082361FE87002A2A45 /* shine6.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CFE2361FE86002A2A45 /* shine6.png */; };
+		D7D80D092361FE87002A2A45 /* shine2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CFF2361FE86002A2A45 /* shine2.png */; };
+		D7D80D0A2361FE87002A2A45 /* shine7.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D002361FE86002A2A45 /* shine7.png */; };
+		D7D80D0B2361FE87002A2A45 /* shine8.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D012361FE87002A2A45 /* shine8.png */; };
+		D7D80D0C2361FE87002A2A45 /* shine10.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D022361FE87002A2A45 /* shine10.png */; };
+		D7D80D0D2361FE87002A2A45 /* shine9.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D032361FE87002A2A45 /* shine9.png */; };
+		D7D80D0E2361FE87002A2A45 /* shine1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D042361FE87002A2A45 /* shine1.png */; };
+		D7D80D0F2361FE87002A2A45 /* shine5.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D052361FE87002A2A45 /* shine5.png */; };
+		D7D80D11236201E9002A2A45 /* shine11.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D10236201E9002A2A45 /* shine11.png */; };
+		D7D80D1423622E50002A2A45 /* boostbutton1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D1223622E50002A2A45 /* boostbutton1.png */; };
+		D7D80D1523622E50002A2A45 /* boostbutton2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D1323622E50002A2A45 /* boostbutton2.png */; };
 		D7DF521E2344F06F00856752 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF521D2344F06F00856752 /* Block.swift */; };
 /* End PBXBuildFile section */
 
@@ -143,6 +156,19 @@
 		D7D80CF123614A91002A2A45 /* chain-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-8.png"; sourceTree = "<group>"; };
 		D7D80CF223614A92002A2A45 /* chain-9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-9.png"; sourceTree = "<group>"; };
 		D7D80CF323614A92002A2A45 /* chain-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-7.png"; sourceTree = "<group>"; };
+		D7D80CFC2361FE86002A2A45 /* shine3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine3.png; sourceTree = "<group>"; };
+		D7D80CFD2361FE86002A2A45 /* shine4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine4.png; sourceTree = "<group>"; };
+		D7D80CFE2361FE86002A2A45 /* shine6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine6.png; sourceTree = "<group>"; };
+		D7D80CFF2361FE86002A2A45 /* shine2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine2.png; sourceTree = "<group>"; };
+		D7D80D002361FE86002A2A45 /* shine7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine7.png; sourceTree = "<group>"; };
+		D7D80D012361FE87002A2A45 /* shine8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine8.png; sourceTree = "<group>"; };
+		D7D80D022361FE87002A2A45 /* shine10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine10.png; sourceTree = "<group>"; };
+		D7D80D032361FE87002A2A45 /* shine9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine9.png; sourceTree = "<group>"; };
+		D7D80D042361FE87002A2A45 /* shine1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine1.png; sourceTree = "<group>"; };
+		D7D80D052361FE87002A2A45 /* shine5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine5.png; sourceTree = "<group>"; };
+		D7D80D10236201E9002A2A45 /* shine11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine11.png; sourceTree = "<group>"; };
+		D7D80D1223622E50002A2A45 /* boostbutton1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boostbutton1.png; sourceTree = "<group>"; };
+		D7D80D1323622E50002A2A45 /* boostbutton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boostbutton2.png; sourceTree = "<group>"; };
 		D7DF521D2344F06F00856752 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -214,6 +240,19 @@
 				D7D80CF323614A92002A2A45 /* chain-7.png */,
 				D7D80CF123614A91002A2A45 /* chain-8.png */,
 				D7D80CF223614A92002A2A45 /* chain-9.png */,
+				D7D80D042361FE87002A2A45 /* shine1.png */,
+				D7D80CFF2361FE86002A2A45 /* shine2.png */,
+				D7D80CFC2361FE86002A2A45 /* shine3.png */,
+				D7D80CFD2361FE86002A2A45 /* shine4.png */,
+				D7D80D052361FE87002A2A45 /* shine5.png */,
+				D7D80CFE2361FE86002A2A45 /* shine6.png */,
+				D7D80D002361FE86002A2A45 /* shine7.png */,
+				D7D80D012361FE87002A2A45 /* shine8.png */,
+				D7D80D032361FE87002A2A45 /* shine9.png */,
+				D7D80D022361FE87002A2A45 /* shine10.png */,
+				D7D80D10236201E9002A2A45 /* shine11.png */,
+				D7D80D1223622E50002A2A45 /* boostbutton1.png */,
+				D7D80D1323622E50002A2A45 /* boostbutton2.png */,
 			);
 			path = Sprites.atlas;
 			sourceTree = "<group>";
@@ -314,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7D80CBB235BA076002A2A45 /* waterfall2.png in Resources */,
+				D7D80D11236201E9002A2A45 /* shine11.png in Resources */,
 				D7D80CBA235BA076002A2A45 /* waterfall3.png in Resources */,
 				D74080B72354B668006B46DF /* fire-Highlighted.png in Resources */,
 				D70F58F2234B820900F4AF18 /* electric.png in Resources */,
@@ -324,10 +364,13 @@
 				D72321AE233BA7A800ED8200 /* Main.storyboard in Resources */,
 				D7D80CDB235BAC06002A2A45 /* electricshock.png in Resources */,
 				D7D80CDF235BAC06002A2A45 /* grassshock.png in Resources */,
+				D7D80D0A2361FE87002A2A45 /* shine7.png in Resources */,
 				D7D80CC1235BA2CF002A2A45 /* electricfall2.png in Resources */,
+				D7D80D0E2361FE87002A2A45 /* shine1.png in Resources */,
 				D755BA1F23478A3F0020A691 /* GameScene.sks in Resources */,
 				D7D80CB8235BA076002A2A45 /* waterfall1.png in Resources */,
 				D7D80CE9236134DC002A2A45 /* combo-4.png in Resources */,
+				D7D80D062361FE87002A2A45 /* shine3.png in Resources */,
 				D7D80CE7236134DC002A2A45 /* combo-7.png in Resources */,
 				D7D80CD5235BA76D002A2A45 /* waterflash.png in Resources */,
 				D7D80CF623614A92002A2A45 /* chain-2.png in Resources */,
@@ -340,11 +383,15 @@
 				D74080B82354B668006B46DF /* grass-Highlighted.png in Resources */,
 				D7D80CCB235BA2D8002A2A45 /* spookyfall1.png in Resources */,
 				D7D80CA72359FCF2002A2A45 /* firefall2.png in Resources */,
+				D7D80D1423622E50002A2A45 /* boostbutton1.png in Resources */,
 				D7D80CB1235B9F19002A2A45 /* grassfall2.png in Resources */,
 				D7D80CB9235BA076002A2A45 /* waterfall4.png in Resources */,
+				D7D80D082361FE87002A2A45 /* shine6.png in Resources */,
 				D70F58F8234B822100F4AF18 /* grass.png in Resources */,
 				D7D80CB2235B9F19002A2A45 /* grassfall3.png in Resources */,
 				D7D80CA92359FCF2002A2A45 /* firefall1.png in Resources */,
+				D7D80D0B2361FE87002A2A45 /* shine8.png in Resources */,
+				D7D80D092361FE87002A2A45 /* shine2.png in Resources */,
 				D70F58FA234B822100F4AF18 /* fire.png in Resources */,
 				D70F58F9234B822100F4AF18 /* water.png in Resources */,
 				D7D80CC0235BA2CF002A2A45 /* electricfall1.png in Resources */,
@@ -353,17 +400,20 @@
 				D72321B3233BA7AF00ED8200 /* LaunchScreen.storyboard in Resources */,
 				D7D80CF423614A92002A2A45 /* chain-6.png in Resources */,
 				D7D80CE6236134DC002A2A45 /* combo-9.png in Resources */,
+				D7D80D1523622E50002A2A45 /* boostbutton2.png in Resources */,
 				D7D80CF523614A92002A2A45 /* chain-4.png in Resources */,
 				D72321A7233BA7A800ED8200 /* Actions.sks in Resources */,
 				D7D80CF823614A92002A2A45 /* chain-3.png in Resources */,
 				D7D80CD2235BA76D002A2A45 /* grassflash.png in Resources */,
 				D7D80CC8235BA2D8002A2A45 /* spookyfall3.png in Resources */,
 				D74080B92354B668006B46DF /* spooky-Highlighted.png in Resources */,
+				D7D80D0F2361FE87002A2A45 /* shine5.png in Resources */,
 				D74080B52354B668006B46DF /* water-Highlighted.png in Resources */,
 				D7D80CFB23614A92002A2A45 /* chain-7.png in Resources */,
 				D7D80CB0235B9F19002A2A45 /* grassfall1.png in Resources */,
 				D7D80CD1235BA76D002A2A45 /* fireflash.png in Resources */,
 				D7D80CF723614A92002A2A45 /* chain-5.png in Resources */,
+				D7D80D072361FE87002A2A45 /* shine4.png in Resources */,
 				D7D80CF923614A92002A2A45 /* chain-8.png in Resources */,
 				D70F58F7234B822100F4AF18 /* spooky.png in Resources */,
 				D7D80CAB235B9C73002A2A45 /* firefall4.png in Resources */,
@@ -371,6 +421,8 @@
 				D7D80CDC235BAC06002A2A45 /* watershock.png in Resources */,
 				D7D80CDE235BAC06002A2A45 /* fireshock.png in Resources */,
 				D7D80CD4235BA76D002A2A45 /* spookyflash.png in Resources */,
+				D7D80D0C2361FE87002A2A45 /* shine10.png in Resources */,
+				D7D80D0D2361FE87002A2A45 /* shine9.png in Resources */,
 				D7D80CEB236134DC002A2A45 /* combo-6.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

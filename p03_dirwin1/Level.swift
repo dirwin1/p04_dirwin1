@@ -314,10 +314,18 @@ class Level {
         }
     }
     
-    func addRow() -> (Set<Block>, Set<Block>, Set<Block>){
+    func addRow() -> (Set<Block>, Set<Block>, Set<Block>, Bool){
         var movedBoyes: Set<Block> = []
         var newBoyes: Set<Block> = []
         var matchedBoyes: Set<Block> = []
+        var survive: Bool = true
+        //check for survival
+        for col in 0..<numColumns{
+            if blocks[numRows-2][col] != nil{
+                survive = false
+            }
+        }
+        
         //move all of the boyes up
         for row in (1..<numRows).reversed(){
             for col in 0..<numColumns{
@@ -346,6 +354,6 @@ class Level {
         }
         
         //fill the bottom up with randos
-        return (movedBoyes, newBoyes, matchedBoyes)
+        return (movedBoyes, newBoyes, matchedBoyes, survive)
     }
 }

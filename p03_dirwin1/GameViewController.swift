@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     var scene: GameScene!
     var level: Level!
     var height: Int = 0
-    var speed: Int = 10
+    var speed: Int = 5
     
     func beginGame() {
       shuffle()
@@ -91,6 +91,7 @@ class GameViewController: UIViewController {
     
     private func handleMatches(match: Set<Block>){
         //lock all match positions
+        var sortedMatches: [Block] = []
         var chainCount: Int = 1
         var matchPositions: Set<Point> = []
         for block in match{
@@ -101,11 +102,23 @@ class GameViewController: UIViewController {
             let row = block.row
             let pos = Point(x: col, y: row)
             matchPositions.insert(pos)
+            sortedMatches.append(block)
         }
+        
+        //sort the blocks by position
+        sortedMatches.sort(by: {
+            if $0.row == $1.row{
+                return $0.column < $1.column
+            }
+            else {
+                return $0.row > $1.row
+            }
+        })
+        
         self.level.lockPosition(positions: matchPositions)
         
         //animate match
-        self.scene.animateMatchedBlocks(for: match, chain: chainCount){
+        self.scene.animateMatchedBlocks(for: sortedMatches, chain: chainCount){
             //remove matches
             self.level.removeBlocks(in: match)
             //unlock the match position
@@ -122,10 +135,20 @@ class GameViewController: UIViewController {
                 scene.addSprites(for: moved.1)
                 scene.animateFallenBlocks(for: moved.0, completion:{})
                 handleMatches(match: moved.2)
+                
+                if moved.3 == false{
+                    //oh no, we lost :(
+                    handleLoss()
+                }
             }
             height = height % 1000
             scene.moveBoard(height: height)
         }
+    }
+    
+    private func handleLoss(){
+        speed = 0
+        scene.animateLoss()
     }
     
     private func handleSpeedUp(){

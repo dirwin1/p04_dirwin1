@@ -9,15 +9,17 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    private var swipeFromColumn: Int?
-    private var swipeFromRow: Int?
+    private var swipeFromBlock: Block?
     var swipeHandler: ((Point, Point) -> Void)?
     var fallHandler: (() -> Void)?
     var moveHandler: (() -> Void)?
     var speedUpHandler: (() -> Void)?
+    private var shineTextures : [SKTexture]  = []
+    private var boostTextures : [SKTexture] = []
     private var selectionSprite = SKSpriteNode()
-    private var speedUpPeriod: Int = 500 //speed up every
+    private var speedUpPeriod: Int = 750 //speed up every
     private var speedUpCounter: Int = 0
+    private var running: Bool = true
     
     var level: Level!
 
@@ -43,15 +45,40 @@ class GameScene: SKScene {
         tileHeight = tileWidth
         
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
-
-        let background = SKSpriteNode(imageNamed: "Background")
+        
+        //setup background and border
+        let backgroundTexture = SKTexture(imageNamed: "Background1")
+        let background = SKSpriteNode(texture: backgroundTexture)
+        background.color = UIColor.black
+        background.colorBlendFactor = 0.5
         background.size = size
         let borderTexture = SKTexture(imageNamed: "Border")
         borderTexture.filteringMode = .nearest
         let border = SKSpriteNode(texture: borderTexture)
         border.size = CGSize(width: 10 * tileWidth, height: 16 * tileHeight)
+        
+        addChild(background)
         addChild(gameLayer)
         addChild(border)
+        
+        //setup boost button
+        for i in 1...2{
+            let tex = SKTexture(imageNamed: "boostbutton\(i)")
+            tex.filteringMode = .nearest
+            boostTextures.append(tex)
+        }
+        let boostButton = SKSpriteNode(texture: boostTextures[0])
+        boostButton.size = CGSize(width: 3 * tileWidth, height: tileHeight)
+        
+        border.addChild(boostButton)
+        boostButton.position = CGPoint(x: 0, y: (-displayHeight / 2) + tileHeight * 0.75)
+        
+        //cache effects
+        for i in 1...11{
+            let shinetex = SKTexture(imageNamed: "shine\(i)")
+            shinetex.filteringMode = .nearest
+            shineTextures.append(shinetex)
+        }
 
         let layerPosition = CGPoint(
             x: -tileWidth * CGFloat(numColumns) / 2,
@@ -111,11 +138,17 @@ class GameScene: SKScene {
         
         blocksLayer.addChild(sprite)
         
+        //create the shine sprite
+        let shineSprite = SKSpriteNode(texture: shineTextures[0])
+        shineSprite.size = CGSize(width: tileWidth, height: tileHeight)
+        sprite.addChild(shineSprite)
+        
         //animate the combo sprite
-        let duration = 0.75
-        let move = SKAction.move(to: CGPoint(x: position.x, y: position.y - offset + tileHeight / 1.5), duration: duration)
+        let duration: Double = 1
+        let move = SKAction.move(to: CGPoint(x: position.x, y: position.y - offset + tileHeight / 1.25), duration: duration)
         move.timingMode = .easeOut
         sprite.run(SKAction.sequence([move, SKAction.removeFromParent()]))
+        shineSprite.run(SKAction.animate(with: shineTextures, timePerFrame: 0.09))
     }
     
     func showChainIndicator(position: CGPoint, size: Int){
@@ -133,11 +166,17 @@ class GameScene: SKScene {
         
         blocksLayer.addChild(sprite)
         
+        //create the shine sprite
+        let shineSprite = SKSpriteNode(texture: shineTextures[0])
+        shineSprite.size = CGSize(width: tileWidth, height: tileHeight)
+        sprite.addChild(shineSprite)
+        
         //animate the chain sprite
-        let duration = 0.75
-        let move = SKAction.move(to: CGPoint(x: position.x, y: position.y + tileHeight / 1.5), duration: duration)
+        let duration: Double = 1
+        let move = SKAction.move(to: CGPoint(x: position.x, y: position.y + tileHeight / 1.25), duration: duration)
         move.timingMode = .easeOut
         sprite.run(SKAction.sequence([move, SKAction.removeFromParent()]))
+        shineSprite.run(SKAction.animate(with: shineTextures, timePerFrame: 0.09))
     }
     
     func hideSelectionIndicator() {
@@ -170,14 +209,13 @@ class GameScene: SKScene {
         if success {
             if let block = level.block(atColumn: column, row: row) {
                 showSelectionIndicator(of: block)
-                swipeFromColumn = column
-                swipeFromRow = row
+                swipeFromBlock = block
             }
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard swipeFromColumn != nil else { return }
+        guard swipeFromBlock != nil else { return }
 
         guard let touch = touches.first else { return }
         let location = touch.location(in: blocksLayer)
@@ -185,17 +223,17 @@ class GameScene: SKScene {
         let (success, column, _) = convertPoint(location)
         if success {
             var horizontalDelta = 0
-            if column < swipeFromColumn! {          // swipe left
+            if column < swipeFromBlock!.column {          // swipe left
                 horizontalDelta = -1
-            } else if column > swipeFromColumn! {   // swipe right
+            } else if column > swipeFromBlock!.column {   // swipe right
                 horizontalDelta = 1
             }
 
             if horizontalDelta != 0 {
                 trySwap(horizontalDelta: horizontalDelta)
                 hideSelectionIndicator()
-                // 5
-                swipeFromColumn = nil
+                //set block back to nil to wait for another swipe
+                swipeFromBlock = nil
             }
         }
     }
@@ -210,21 +248,18 @@ class GameScene: SKScene {
     }
     
     private func trySwap(horizontalDelta: Int) {
-        let toColumn = swipeFromColumn! + horizontalDelta
+        let toColumn = swipeFromBlock!.column + horizontalDelta
         guard toColumn >= 0 && toColumn < numColumns else { return }
 
         if let handler = swipeHandler{
-            handler(Point(x: swipeFromColumn!, y: swipeFromRow!), Point(x: toColumn, y: swipeFromRow!))
+            handler(Point(x: swipeFromBlock!.column, y: swipeFromBlock!.row), Point(x: toColumn, y: swipeFromBlock!.row))
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if selectionSprite.parent != nil && swipeFromColumn != nil {
+        if selectionSprite.parent != nil && swipeFromBlock != nil {
             hideSelectionIndicator()
         }
-        
-        swipeFromColumn = nil
-        swipeFromRow = nil
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -268,16 +303,18 @@ class GameScene: SKScene {
     
     
     override func update(_ currentTime: TimeInterval) {
-        fallHandler!()
-        if(speedUpCounter == 0){
-            speedUpHandler!()
+        if running{
+            fallHandler!()
+            if(speedUpCounter == 0){
+                speedUpHandler!()
+            }
+            moveHandler!()
+            
+            speedUpCounter = (speedUpCounter + 1) % speedUpPeriod
         }
-        moveHandler!()
-        
-        speedUpCounter = (speedUpCounter + 1) % speedUpPeriod
     }
     
-    func animateMatchedBlocks(for blocks: Set<Block>, chain: Int, completion: @escaping () -> Void) {
+    func animateMatchedBlocks(for blocks: [Block], chain: Int, completion: @escaping () -> Void) {
         //show indicators
         if blocks.count > 0 {
             let pos = pointFor(column: blocks.first!.column, row: blocks.first!.row)
@@ -290,30 +327,31 @@ class GameScene: SKScene {
         }
         
         //animate the blocks
+        var waitTime: Double = 0.15
+        
         for block in blocks {
             if let sprite = block.sprite {
                 if sprite.action(forKey: "removing") == nil {
                     sprite.removeAllActions()
+                    sprite.zPosition = 100
                     
                     let flash = SKAction.animate(with: block.flashFrames, timePerFrame: 0.08, resize: false, restore: true)
                     let shock = SKAction.run({
                         sprite.texture = block.shockTexture
                     })
+                    let wait = SKAction.wait(forDuration: waitTime)
+                    let grow = SKAction.scale(to: 1.5, duration: 0.1)
+                    grow.timingMode = .easeIn
+                    let die = SKAction.removeFromParent()
                     
-                    sprite.run(SKAction.sequence([flash, shock]))
+                    sprite.run(SKAction.sequence([flash, shock, wait, grow, die]))
+                    
+                    waitTime += 0.15
                 }
             }
         }
-        var waitTime: Double = 0.12
-        for block in blocks{
-            if let sprite = block.sprite{
-                let wait = SKAction.wait(forDuration: 1 + waitTime)
-                let die = SKAction.removeFromParent()
-                sprite.run(SKAction.sequence([wait, die]))
-                waitTime += 0.12
-            }
-        }
-        run(SKAction.wait(forDuration: 1 + waitTime), completion: completion)
+
+        run(SKAction.wait(forDuration: 1 + waitTime - 0.2), completion: completion)
     }
     
     func animateFallenBlocks(for blocks: Set<Block>, completion: @escaping () -> Void){
@@ -333,5 +371,29 @@ class GameScene: SKScene {
                                             restore: true), withKey: "land")
             }
         }
+    }
+    
+    func animateLoss(){
+        running = false
+        
+        //shake the screen
+        shake(times: 30, ampX: 30, ampY: 30)
+        
+        //kill all of the blocks
+    }
+    
+    func shake(times: Int, ampX: Int, ampY: Int) {
+        let initialPoint: CGPoint = gameLayer.position;
+        var randomActions: [SKAction] = []
+        for _ in 0..<times {
+            let randX = Int(initialPoint.x) + (Int(arc4random()) % ampX) - ampX/2
+            let randY = Int(initialPoint.y) + (Int(arc4random()) % ampY) - ampY/2
+            let action = SKAction.move(to: CGPoint(x: randX, y: randY), duration: 0.01)
+            randomActions.append(action)
+        }
+        
+        randomActions.append(SKAction.move(to: initialPoint, duration: 0.01))
+
+        gameLayer.run(SKAction.sequence(randomActions))
     }
 }
