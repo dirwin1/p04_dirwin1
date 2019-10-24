@@ -43,6 +43,7 @@ class Block : CustomStringConvertible, Hashable {
     var fallFrames: [SKTexture] = []
     var flashFrames: [SKTexture] = []
     var falling: Bool = false
+    var chainCount: Int = 1
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(row)

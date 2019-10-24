@@ -14,6 +14,7 @@ let numRows = 12
 
 class Level {
     private var blocks = [[Block?]](repeating: [Block?](repeating: nil, count: numColumns), count: numRows)
+    private var upComingRow = [Block?](repeating: nil, count: numColumns)
     var lockedPositions : Set<Point> = []
     
     func block(atColumn column: Int, row: Int) -> Block? {
@@ -85,14 +86,28 @@ class Level {
                     if(row == 0){
                         blocks[row][col]?.falling = false;
                         landedBoyes.insert(blocks[row][col]!)
-                        matchedBoyes = matchedBoyes.union(checkForMatch(at: Point(x: col, y: row)))
+                        //check for matches
+                        let myMatches = checkForMatch(at: Point(x: col, y: row))
+                        if myMatches.isEmpty{
+                            blocks[row][col]!.chainCount = 1
+                        }
+                        else{
+                            matchedBoyes = matchedBoyes.union(myMatches)
+                        }
                     }
                     else if(blocks[row-1][col] != nil){
                         //check for landing
                         if(blocks[row-1][col]?.falling == false){
                             blocks[row][col]?.falling = false;
                             landedBoyes.insert(blocks[row][col]!)
-                            matchedBoyes = matchedBoyes.union(checkForMatch(at: Point(x: col, y: row)))
+                            //check for matches
+                            let myMatches = checkForMatch(at: Point(x: col, y: row))
+                            if myMatches.isEmpty{
+                                blocks[row][col]!.chainCount = 1
+                            }
+                            else{
+                                matchedBoyes = matchedBoyes.union(myMatches)
+                            }
                         }
                     }
                     else{
@@ -109,8 +124,8 @@ class Level {
         var set: Set<Block> = []
 
         // 1
-        for row in 0..<numRows {
-            for column in 0..<numColumns {
+        for column in 0..<numColumns {
+            for row in 0..<Int(arc4random_uniform(UInt32(numRows - 5))) {
                 //make sure we don't create any chains to begin with
                 var blockType: BlockType
                 
@@ -129,10 +144,34 @@ class Level {
                 set.insert(block)
             }
       }
+        
+        let newRow = createNewRow()
+        set = set.union(newRow)
       return set
     }
     
-    func performSwap(from: Point, to: Point){
+    private func createNewRow() -> Set<Block>{
+        var set: Set<Block> = []
+        
+        for col in 0..<numColumns{
+            var blockType: BlockType
+            
+            repeat{
+                blockType = BlockType.random()
+            } while (col >= 2 &&
+                upComingRow[col-1]?.blockType == blockType &&
+                upComingRow[col-2]?.blockType == blockType)
+            
+            let block = Block(column: col, row: -1, blockType: blockType)
+            upComingRow[col] = block
+            
+            set.insert(block)
+        }
+        
+        return set
+    }
+    
+    func performSwap(from: Point, to: Point) -> Set<Block>{
         let blockA : Block? = blocks[from.y][from.x]
         let blockB : Block? = blocks[to.y][to.x]
         
@@ -141,6 +180,7 @@ class Level {
             blocks[to.y][to.x] = blockA
             blockA?.column = to.x
             blockA?.row = to.y
+            //blockA?.chainCount = 1
         }
         else{
             blocks[to.y][to.x] = nil
@@ -150,20 +190,18 @@ class Level {
             blocks[from.y][from.x] = blockB
             blockB?.column = from.x
             blockB?.row = from.y
+            //blockB?.chainCount = 1
         }
         else{
             blocks[from.y][from.x] = nil
         }
-    }
-    
-    func removeMatches(from: Point, to: Point) -> Set<Block>{
-        //check for matches
-        var match : Set<Block> = []
-        match = match.union(checkForMatch(at: to))
-        match = match.union(checkForMatch(at: from))
         
-        //removeBlocks(in: match)
-        return match
+        //check for matches
+        let matchTo = checkForMatch(at: to)
+        let matchFrom = checkForMatch(at: from)
+        let matches = matchTo.union(matchFrom)
+        
+        return matches
     }
     
     func checkForMatch(at: Point) -> Set<Block>{
@@ -258,8 +296,21 @@ class Level {
     }
     
     func removeBlocks(in blockSet : Set<Block>) {
-        for block in blockSet {
-            blocks[block.row][block.column] = nil
+        //first calculate highest chain in the match
+        var highestChain: Int = 1
+        for b in blockSet{
+            if b.chainCount > highestChain {
+                highestChain = b.chainCount
+            }
+        }
+        
+        for b in blockSet {
+            blocks[b.row][b.column] = nil
+            //increment chain for the above block
+            let above = block(atColumn: b.column, row: b.row + 1)
+            if above != nil{
+                above!.chainCount = highestChain + 1
+            }
         }
     }
     
@@ -277,23 +328,18 @@ class Level {
                 }
             }
         }
-        //add the new column
+        //move the upcoming row into the real row
         for col in 0..<numColumns{
-            //make sure we don't create any horizontal matches
-            var t: BlockType = BlockType.random()
-            var keepLooking: Bool = true
-            while keepLooking {
-                if col >= 2 && blocks[0][col-1]?.blockType == t && blocks[0][col-2]?.blockType == t{
-                    t = BlockType.random()
-                }
-                else{
-                    keepLooking = false
-                }
-            }
-            blocks[0][col] = Block(column: col, row: 0, blockType: BlockType.random())
-            movedBoyes.insert(blocks[0][col]!)
-            newBoyes.insert(blocks[0][col]!)
+            let block = upComingRow[col]
+            block?.row = 0
+            block?.sprite?.color = UIColor.white
+            blocks[0][col] = block
+            movedBoyes.insert(block!)
         }
+        //create new upcoming boyes
+        newBoyes = createNewRow()
+        movedBoyes = movedBoyes.union(newBoyes)
+        
         //check for matches on the new row
         for col in 0..<numColumns{
             matchedBoyes = matchedBoyes.union(checkForMatch(at: Point(x: col, y: 0)))

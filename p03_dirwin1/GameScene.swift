@@ -14,10 +14,10 @@ class GameScene: SKScene {
     var swipeHandler: ((Point, Point) -> Void)?
     var fallHandler: (() -> Void)?
     var moveHandler: (() -> Void)?
+    var speedUpHandler: (() -> Void)?
     private var selectionSprite = SKSpriteNode()
-    private var fallCounter: Int = 0
-    private var boardSpeed: Int = 1
-    private var moveCounter: Int = 0
+    private var speedUpPeriod: Int = 500 //speed up every
+    private var speedUpCounter: Int = 0
     
     var level: Level!
 
@@ -39,15 +39,19 @@ class GameScene: SKScene {
         let displayWidth = displaySize.width
         let displayHeight = displaySize.height
         
-        tileWidth = min(((0.95 * displayWidth) / 6), (0.95 * displayHeight / 12))
+        tileWidth = min(((0.85 * displayWidth) / 6), (0.85 * displayHeight / 12))
         tileHeight = tileWidth
         
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
 
         let background = SKSpriteNode(imageNamed: "Background")
         background.size = size
-        //addChild(background)
+        let borderTexture = SKTexture(imageNamed: "Border")
+        borderTexture.filteringMode = .nearest
+        let border = SKSpriteNode(texture: borderTexture)
+        border.size = CGSize(width: 10 * tileWidth, height: 16 * tileHeight)
         addChild(gameLayer)
+        addChild(border)
 
         let layerPosition = CGPoint(
             x: -tileWidth * CGFloat(numColumns) / 2,
@@ -63,6 +67,10 @@ class GameScene: SKScene {
             let sprite = SKSpriteNode(imageNamed: block.blockType.spriteName)
             sprite.size = CGSize(width: tileWidth, height: tileHeight)
             sprite.position = pointFor(column: block.column, row: block.row)
+            if block.row == -1{
+                sprite.color = UIColor.black
+                sprite.colorBlendFactor = 0.7
+            }
             blocksLayer.addChild(sprite)
             block.sprite = sprite
         }
@@ -81,6 +89,55 @@ class GameScene: SKScene {
             sprite.addChild(selectionSprite)
             selectionSprite.alpha = 1.0
         }
+    }
+    
+    func showComboIndicator(position: CGPoint, size: Int, isChain: Bool){
+        if size < 4 || size > 9{
+            return
+        }
+        //create the combo sprite
+        let texture = SKTexture(imageNamed: "combo-\(size)")
+        texture.filteringMode = .nearest
+        
+        let sprite = SKSpriteNode(texture: texture)
+        
+        var offset: CGFloat = 0
+        if isChain {
+            offset = tileHeight
+        }
+        sprite.position = CGPoint(x: position.x, y: position.y - offset)
+        sprite.size = CGSize(width: tileWidth, height: tileHeight)
+        sprite.zPosition = 250
+        
+        blocksLayer.addChild(sprite)
+        
+        //animate the combo sprite
+        let duration = 0.75
+        let move = SKAction.move(to: CGPoint(x: position.x, y: position.y - offset + tileHeight / 1.5), duration: duration)
+        move.timingMode = .easeOut
+        sprite.run(SKAction.sequence([move, SKAction.removeFromParent()]))
+    }
+    
+    func showChainIndicator(position: CGPoint, size: Int){
+        if size > 9 {
+            return
+        }
+        //create the chain sprite
+        let texture = SKTexture(imageNamed: "chain-\(size)")
+        texture.filteringMode = .nearest
+        
+        let sprite = SKSpriteNode(texture: texture)
+        sprite.position = position
+        sprite.size = CGSize(width: tileWidth, height: tileHeight)
+        sprite.zPosition = 250
+        
+        blocksLayer.addChild(sprite)
+        
+        //animate the chain sprite
+        let duration = 0.75
+        let move = SKAction.move(to: CGPoint(x: position.x, y: position.y + tileHeight / 1.5), duration: duration)
+        move.timingMode = .easeOut
+        sprite.run(SKAction.sequence([move, SKAction.removeFromParent()]))
     }
     
     func hideSelectionIndicator() {
@@ -144,7 +201,7 @@ class GameScene: SKScene {
     }
     
     func moveBoard(height: Int){
-        let h = CGFloat(height)/100.0
+        let h = CGFloat(height)/1000.0
         let xPos = -tileWidth * CGFloat(numColumns) / 2
         let yPos = -tileHeight * ((CGFloat(numRows) / 2) - h)
         blocksLayer.position = CGPoint(
@@ -199,30 +256,46 @@ class GameScene: SKScene {
             moveB.timingMode = .easeOut
             spriteB?.run(moveB)
         }
-        run(SKAction.wait(forDuration: 0.1), completion: completion)
+        
+        var waitDur = 2 * duration
+        if level.block(atColumn: to.x, row: to.y - 1) == nil{
+            waitDur += 0.05
+        }
+        
+        run(SKAction.wait(forDuration: waitDur), completion: completion)
         //run(swapSound)
     }
     
     
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-        //if fallCounter == 1 {
         fallHandler!()
-        if(moveCounter == 0){
-            moveHandler!()
+        if(speedUpCounter == 0){
+            speedUpHandler!()
         }
-        moveCounter = (moveCounter + 1) % boardSpeed
-        //}
-        //fallCounter = (fallCounter + 1) % 2
+        moveHandler!()
+        
+        speedUpCounter = (speedUpCounter + 1) % speedUpPeriod
     }
     
-    func animateMatchedBlocks(for blocks: Set<Block>, completion: @escaping () -> Void) {
+    func animateMatchedBlocks(for blocks: Set<Block>, chain: Int, completion: @escaping () -> Void) {
+        //show indicators
+        if blocks.count > 0 {
+            let pos = pointFor(column: blocks.first!.column, row: blocks.first!.row)
+            var isChain: Bool = false
+            if(chain > 1){
+                isChain = true
+                showChainIndicator(position: pos, size: chain)
+            }
+            showComboIndicator(position: pos, size: blocks.count, isChain: isChain)
+        }
+        
+        //animate the blocks
         for block in blocks {
             if let sprite = block.sprite {
                 if sprite.action(forKey: "removing") == nil {
                     sprite.removeAllActions()
                     
-                    let flash = SKAction.animate(with: block.flashFrames, timePerFrame: 0.1, resize: false, restore: true)
+                    let flash = SKAction.animate(with: block.flashFrames, timePerFrame: 0.08, resize: false, restore: true)
                     let shock = SKAction.run({
                         sprite.texture = block.shockTexture
                     })
@@ -231,13 +304,13 @@ class GameScene: SKScene {
                 }
             }
         }
-        var waitTime: Double = 0.15
+        var waitTime: Double = 0.12
         for block in blocks{
             if let sprite = block.sprite{
                 let wait = SKAction.wait(forDuration: 1 + waitTime)
                 let die = SKAction.removeFromParent()
                 sprite.run(SKAction.sequence([wait, die]))
-                waitTime += 0.15
+                waitTime += 0.12
             }
         }
         run(SKAction.wait(forDuration: 1 + waitTime), completion: completion)

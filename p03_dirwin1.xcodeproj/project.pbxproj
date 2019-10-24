@@ -58,6 +58,20 @@
 		D7D80CDD235BAC06002A2A45 /* spookyshock.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CD8235BAC06002A2A45 /* spookyshock.png */; };
 		D7D80CDE235BAC06002A2A45 /* fireshock.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CD9235BAC06002A2A45 /* fireshock.png */; };
 		D7D80CDF235BAC06002A2A45 /* grassshock.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CDA235BAC06002A2A45 /* grassshock.png */; };
+		D7D80CE6236134DC002A2A45 /* combo-9.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CE0236134DB002A2A45 /* combo-9.png */; };
+		D7D80CE7236134DC002A2A45 /* combo-7.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CE1236134DB002A2A45 /* combo-7.png */; };
+		D7D80CE8236134DC002A2A45 /* combo-5.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CE2236134DB002A2A45 /* combo-5.png */; };
+		D7D80CE9236134DC002A2A45 /* combo-4.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CE3236134DB002A2A45 /* combo-4.png */; };
+		D7D80CEA236134DC002A2A45 /* combo-8.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CE4236134DC002A2A45 /* combo-8.png */; };
+		D7D80CEB236134DC002A2A45 /* combo-6.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CE5236134DC002A2A45 /* combo-6.png */; };
+		D7D80CF423614A92002A2A45 /* chain-6.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CEC23614A91002A2A45 /* chain-6.png */; };
+		D7D80CF523614A92002A2A45 /* chain-4.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CED23614A91002A2A45 /* chain-4.png */; };
+		D7D80CF623614A92002A2A45 /* chain-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CEE23614A91002A2A45 /* chain-2.png */; };
+		D7D80CF723614A92002A2A45 /* chain-5.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CEF23614A91002A2A45 /* chain-5.png */; };
+		D7D80CF823614A92002A2A45 /* chain-3.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CF023614A91002A2A45 /* chain-3.png */; };
+		D7D80CF923614A92002A2A45 /* chain-8.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CF123614A91002A2A45 /* chain-8.png */; };
+		D7D80CFA23614A92002A2A45 /* chain-9.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CF223614A92002A2A45 /* chain-9.png */; };
+		D7D80CFB23614A92002A2A45 /* chain-7.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CF323614A92002A2A45 /* chain-7.png */; };
 		D7DF521E2344F06F00856752 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF521D2344F06F00856752 /* Block.swift */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +129,20 @@
 		D7D80CD8235BAC06002A2A45 /* spookyshock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spookyshock.png; sourceTree = "<group>"; };
 		D7D80CD9235BAC06002A2A45 /* fireshock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireshock.png; sourceTree = "<group>"; };
 		D7D80CDA235BAC06002A2A45 /* grassshock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grassshock.png; sourceTree = "<group>"; };
+		D7D80CE0236134DB002A2A45 /* combo-9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "combo-9.png"; sourceTree = "<group>"; };
+		D7D80CE1236134DB002A2A45 /* combo-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "combo-7.png"; sourceTree = "<group>"; };
+		D7D80CE2236134DB002A2A45 /* combo-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "combo-5.png"; sourceTree = "<group>"; };
+		D7D80CE3236134DB002A2A45 /* combo-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "combo-4.png"; sourceTree = "<group>"; };
+		D7D80CE4236134DC002A2A45 /* combo-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "combo-8.png"; sourceTree = "<group>"; };
+		D7D80CE5236134DC002A2A45 /* combo-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "combo-6.png"; sourceTree = "<group>"; };
+		D7D80CEC23614A91002A2A45 /* chain-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-6.png"; sourceTree = "<group>"; };
+		D7D80CED23614A91002A2A45 /* chain-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-4.png"; sourceTree = "<group>"; };
+		D7D80CEE23614A91002A2A45 /* chain-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-2.png"; sourceTree = "<group>"; };
+		D7D80CEF23614A91002A2A45 /* chain-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-5.png"; sourceTree = "<group>"; };
+		D7D80CF023614A91002A2A45 /* chain-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-3.png"; sourceTree = "<group>"; };
+		D7D80CF123614A91002A2A45 /* chain-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-8.png"; sourceTree = "<group>"; };
+		D7D80CF223614A92002A2A45 /* chain-9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-9.png"; sourceTree = "<group>"; };
+		D7D80CF323614A92002A2A45 /* chain-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chain-7.png"; sourceTree = "<group>"; };
 		D7DF521D2344F06F00856752 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,6 +200,20 @@
 				D70F58F3234B822100F4AF18 /* spooky.png */,
 				D70F58F5234B822100F4AF18 /* water.png */,
 				D70F58F1234B820900F4AF18 /* electric.png */,
+				D7D80CE3236134DB002A2A45 /* combo-4.png */,
+				D7D80CE2236134DB002A2A45 /* combo-5.png */,
+				D7D80CE5236134DC002A2A45 /* combo-6.png */,
+				D7D80CE1236134DB002A2A45 /* combo-7.png */,
+				D7D80CE4236134DC002A2A45 /* combo-8.png */,
+				D7D80CE0236134DB002A2A45 /* combo-9.png */,
+				D7D80CEE23614A91002A2A45 /* chain-2.png */,
+				D7D80CF023614A91002A2A45 /* chain-3.png */,
+				D7D80CED23614A91002A2A45 /* chain-4.png */,
+				D7D80CEF23614A91002A2A45 /* chain-5.png */,
+				D7D80CEC23614A91002A2A45 /* chain-6.png */,
+				D7D80CF323614A92002A2A45 /* chain-7.png */,
+				D7D80CF123614A91002A2A45 /* chain-8.png */,
+				D7D80CF223614A92002A2A45 /* chain-9.png */,
 			);
 			path = Sprites.atlas;
 			sourceTree = "<group>";
@@ -278,13 +320,17 @@
 				D7D80CCA235BA2D8002A2A45 /* spookyfall4.png in Resources */,
 				D7D80CC2235BA2CF002A2A45 /* electricfall4.png in Resources */,
 				D7D80CDD235BAC06002A2A45 /* spookyshock.png in Resources */,
+				D7D80CFA23614A92002A2A45 /* chain-9.png in Resources */,
 				D72321AE233BA7A800ED8200 /* Main.storyboard in Resources */,
 				D7D80CDB235BAC06002A2A45 /* electricshock.png in Resources */,
 				D7D80CDF235BAC06002A2A45 /* grassshock.png in Resources */,
 				D7D80CC1235BA2CF002A2A45 /* electricfall2.png in Resources */,
 				D755BA1F23478A3F0020A691 /* GameScene.sks in Resources */,
 				D7D80CB8235BA076002A2A45 /* waterfall1.png in Resources */,
+				D7D80CE9236134DC002A2A45 /* combo-4.png in Resources */,
+				D7D80CE7236134DC002A2A45 /* combo-7.png in Resources */,
 				D7D80CD5235BA76D002A2A45 /* waterflash.png in Resources */,
+				D7D80CF623614A92002A2A45 /* chain-2.png in Resources */,
 				D72321B0233BA7AF00ED8200 /* Assets.xcassets in Resources */,
 				D7D80CC9235BA2D8002A2A45 /* spookyfall2.png in Resources */,
 				D7D80CA82359FCF2002A2A45 /* firefall3.png in Resources */,
@@ -302,20 +348,30 @@
 				D70F58FA234B822100F4AF18 /* fire.png in Resources */,
 				D70F58F9234B822100F4AF18 /* water.png in Resources */,
 				D7D80CC0235BA2CF002A2A45 /* electricfall1.png in Resources */,
+				D7D80CEA236134DC002A2A45 /* combo-8.png in Resources */,
+				D7D80CE8236134DC002A2A45 /* combo-5.png in Resources */,
 				D72321B3233BA7AF00ED8200 /* LaunchScreen.storyboard in Resources */,
+				D7D80CF423614A92002A2A45 /* chain-6.png in Resources */,
+				D7D80CE6236134DC002A2A45 /* combo-9.png in Resources */,
+				D7D80CF523614A92002A2A45 /* chain-4.png in Resources */,
 				D72321A7233BA7A800ED8200 /* Actions.sks in Resources */,
+				D7D80CF823614A92002A2A45 /* chain-3.png in Resources */,
 				D7D80CD2235BA76D002A2A45 /* grassflash.png in Resources */,
 				D7D80CC8235BA2D8002A2A45 /* spookyfall3.png in Resources */,
 				D74080B92354B668006B46DF /* spooky-Highlighted.png in Resources */,
 				D74080B52354B668006B46DF /* water-Highlighted.png in Resources */,
+				D7D80CFB23614A92002A2A45 /* chain-7.png in Resources */,
 				D7D80CB0235B9F19002A2A45 /* grassfall1.png in Resources */,
 				D7D80CD1235BA76D002A2A45 /* fireflash.png in Resources */,
+				D7D80CF723614A92002A2A45 /* chain-5.png in Resources */,
+				D7D80CF923614A92002A2A45 /* chain-8.png in Resources */,
 				D70F58F7234B822100F4AF18 /* spooky.png in Resources */,
 				D7D80CAB235B9C73002A2A45 /* firefall4.png in Resources */,
 				D7D80CB3235B9F19002A2A45 /* grassfall4.png in Resources */,
 				D7D80CDC235BAC06002A2A45 /* watershock.png in Resources */,
 				D7D80CDE235BAC06002A2A45 /* fireshock.png in Resources */,
 				D7D80CD4235BA76D002A2A45 /* spookyflash.png in Resources */,
+				D7D80CEB236134DC002A2A45 /* combo-6.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     var scene: GameScene!
     var level: Level!
     var height: Int = 0
+    var speed: Int = 10
     
     func beginGame() {
       shuffle()
@@ -43,6 +44,7 @@ class GameViewController: UIViewController {
             scene.swipeHandler = handleSwipe
             scene.fallHandler = handleFall
             scene.moveHandler = handleMove
+            scene.speedUpHandler = handleSpeedUp
             
             view.showsFPS = true
             view.showsNodeCount = true
@@ -67,13 +69,12 @@ class GameViewController: UIViewController {
         //animate and wait for the animation to finish to update the level
         scene.animateSwap(from: from, to: to) {
             //update the data
-            self.level.performSwap(from: from, to: to)
+            let match = self.level.performSwap(from: from, to: to)
             //unlock the positions that we swapped with
             self.level.unlockPosition(pos: from)
             self.level.unlockPosition(pos: to)
             
-            //now check for matches
-            let match = self.level.removeMatches(from: from, to: to)
+            //now handle matches
             self.handleMatches(match: match)
         }
     }
@@ -90,8 +91,12 @@ class GameViewController: UIViewController {
     
     private func handleMatches(match: Set<Block>){
         //lock all match positions
+        var chainCount: Int = 1
         var matchPositions: Set<Point> = []
         for block in match{
+            if block.chainCount > chainCount{
+                chainCount = block.chainCount
+            }
             let col = block.column
             let row = block.row
             let pos = Point(x: col, y: row)
@@ -100,7 +105,7 @@ class GameViewController: UIViewController {
         self.level.lockPosition(positions: matchPositions)
         
         //animate match
-        self.scene.animateMatchedBlocks(for: match){
+        self.scene.animateMatchedBlocks(for: match, chain: chainCount){
             //remove matches
             self.level.removeBlocks(in: match)
             //unlock the match position
@@ -110,16 +115,21 @@ class GameViewController: UIViewController {
     
     private func handleMove(){
         if level.lockedPositions.isEmpty{
-            height = (height + 1) % 100
-            scene.moveBoard(height: height)
-            if(height == 0){
+            height = height + speed
+            if(height >= 1000){
                 //need to add a new row
                 let moved = level.addRow()
                 scene.addSprites(for: moved.1)
                 scene.animateFallenBlocks(for: moved.0, completion:{})
                 handleMatches(match: moved.2)
             }
+            height = height % 1000
+            scene.moveBoard(height: height)
         }
+    }
+    
+    private func handleSpeedUp(){
+        speed += 1
     }
 
     override var shouldAutorotate: Bool {
