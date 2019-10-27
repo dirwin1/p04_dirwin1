@@ -20,8 +20,25 @@ class GameScene: SKScene {
     private var speedUpPeriod: Int = 750 //speed up every
     private var speedUpCounter: Int = 0
     private var running: Bool = true
+    var timer : SKLabelNode = SKLabelNode()
+    
+    //Immediately after leveTimerValue variable is set, update label's text
+    var timerValue: Int = 0 {
+        didSet {
+            let min = timerValue / 60
+            var sec: String
+            if timerValue % 60 < 10{
+                sec = "0\(timerValue%60)"
+            }
+            else{
+                sec = "\(timerValue%60)"
+            }
+            timer.text = "\(min):\(sec)"
+        }
+    }
     
     var level: Level!
+    var controller: GameViewController!
 
     var tileWidth: CGFloat = 64.0
     var tileHeight: CGFloat = 64.0
@@ -61,13 +78,30 @@ class GameScene: SKScene {
         addChild(gameLayer)
         addChild(border)
         
+        //setup timer
+        timer.fontColor = UIColor.white
+        timer.fontSize = 40
+        timer.position = CGPoint(x: 0, y: (displayHeight / 2) - tileHeight * 1.25)
+        timer.text = "\(timerValue)"
+        border.addChild(timer)
+        
+        let wait = SKAction.wait(forDuration: 1) //change countdown speed here
+        let block = SKAction.run({
+            self.timerValue += 1
+        })
+        let sequence = SKAction.sequence([wait,block])
+        run(SKAction.repeatForever(sequence), withKey: "countdown")
+        
         //setup boost button
         for i in 1...2{
             let tex = SKTexture(imageNamed: "boostbutton\(i)")
             tex.filteringMode = .nearest
             boostTextures.append(tex)
         }
-        let boostButton = SKSpriteNode(texture: boostTextures[0])
+        let boostButton = FTButtonNode(normalTexture: boostTextures[0], selectedTexture: boostTextures[1], disabledTexture: boostTextures[1])
+        boostButton.setButtonAction(target: self, triggerEvent: .TouchDown, action: #selector(GameScene.startBoost))
+        boostButton.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(GameScene.endBoost))
+        
         boostButton.size = CGSize(width: 3 * tileWidth, height: tileHeight)
         
         border.addChild(boostButton)
@@ -335,7 +369,7 @@ class GameScene: SKScene {
                     sprite.removeAllActions()
                     sprite.zPosition = 100
                     
-                    let flash = SKAction.animate(with: block.flashFrames, timePerFrame: 0.08, resize: false, restore: true)
+                    let flash = SKAction.animate(with: block.flashFrames, timePerFrame: 0.04, resize: false, restore: true)
                     let shock = SKAction.run({
                         sprite.texture = block.shockTexture
                     })
@@ -344,7 +378,7 @@ class GameScene: SKScene {
                     grow.timingMode = .easeIn
                     let die = SKAction.removeFromParent()
                     
-                    sprite.run(SKAction.sequence([flash, shock, wait, grow, die]))
+                    sprite.run(SKAction.sequence([flash, flash, shock, wait, grow, die]))
                     
                     waitTime += 0.15
                 }
@@ -395,5 +429,34 @@ class GameScene: SKScene {
         randomActions.append(SKAction.move(to: initialPoint, duration: 0.01))
 
         gameLayer.run(SKAction.sequence(randomActions))
+    }
+    
+    @objc func startBoost(){
+        print("Boost Started")
+        controller.startBoost()
+    }
+    
+    @objc func endBoost(){
+        print("Boost Ended")
+        controller.endBoost()
+    }
+    
+    func startBouncing(blocks: Set<Block>){
+        for block in blocks{
+            if let sprite = block.sprite{
+                if sprite.action(forKey: "bouncing") == nil{
+                    sprite.run(SKAction.repeatForever(SKAction.animate(with: block.fallFrames, timePerFrame: 0.08)), withKey: "bouncing")
+                }
+            }
+        }
+    }
+    
+    func stopBouncing(blocks: Set<Block>){
+        for block in blocks{
+            if let sprite = block.sprite{
+                sprite.removeAction(forKey: "bouncing")
+                sprite.texture = block.origTexture
+            }
+        }
     }
 }

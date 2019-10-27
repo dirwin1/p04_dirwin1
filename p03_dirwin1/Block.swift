@@ -41,9 +41,10 @@ class Block : CustomStringConvertible, Hashable {
     var highLightTexture: SKTexture
     var shockTexture: SKTexture
     var fallFrames: [SKTexture] = []
+    var bounceFrames: [SKTexture] = []
     var flashFrames: [SKTexture] = []
     var falling: Bool = false
-    var chainCount: Int = 1
+    var inChain: Bool = false
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(row)
@@ -72,12 +73,15 @@ class Block : CustomStringConvertible, Hashable {
         highLightTexture = SKTexture(imageNamed: "\(blockType.spriteName)-Highlighted")
         highLightTexture.filteringMode = .nearest
         
+        bounceFrames.append(origTexture)
+        
         let numImages = 4
         for i in 1...numImages {
             let spriteName = "\(blockType.spriteName)fall\(i)"
             let tex = SKTexture(imageNamed: spriteName)
             tex.filteringMode = .nearest
             fallFrames.append(tex)
+            bounceFrames.append(tex)
         }
         
         //flash animation

@@ -16,6 +16,8 @@ class Level {
     private var blocks = [[Block?]](repeating: [Block?](repeating: nil, count: numColumns), count: numRows)
     private var upComingRow = [Block?](repeating: nil, count: numColumns)
     var lockedPositions : Set<Point> = []
+    var chainBlocksCount : Int = 0
+    var chainCount = 2
     
     func block(atColumn column: Int, row: Int) -> Block? {
         if(column < 0 || column >= numColumns){
@@ -53,49 +55,49 @@ class Level {
         return initializeBlocks()
     }
     
-    func startFall() -> Set<Block>{
-        var fallingBoyes: Set<Block> = []
-        for row in 0..<numRows{
-            for col in 0..<numColumns{
-                if block(atColumn: col, row: row) == nil && block(atColumn: col, row: row + 1) != nil && block(atColumn: col, row: row + 1)?.falling == false && !isLocked(pos: Point(x: col, y: row)) && !isLocked(pos: Point(x: col, y: row + 1)){
-                    //fall down
-                    block(atColumn: col, row: row + 1)?.falling = true
-                    fallingBoyes.insert(block(atColumn: col, row: row + 1)!)
-                }
-            }
-        }
-        return fallingBoyes
-    }
-    
     func fall() -> (Set<Block>, Set<Block>, Set<Block>){
         var movedBoys: Set<Block> = []
         var landedBoyes: Set<Block> = []
         var matchedBoyes: Set<Block> = []
+        
+        //move blocks down
         for row in 0..<numRows{
             for col in 0..<numColumns{
+                //fall down
                 if block(atColumn: col, row: row) == nil && block(atColumn: col, row: row + 1) != nil
                     && !isLocked(pos: Point(x: col, y: row)) && !isLocked(pos: Point(x: col, y: row + 1)) {
-                    
+        
                     //fall down
                     movedBoys.insert(blocks[row+1][col]!)
                     blocks[row][col] = blocks[row+1][col]
-                    blocks[row][col]?.column = col
-                    blocks[row][col]?.row = row
+                    blocks[row][col]!.column = col
+                    blocks[row][col]!.row = row
                     blocks[row+1][col] = nil
-                    
+                    blocks[row][col]!.falling = true
+                }
+            }
+        }
+        
+        for row in 0..<numRows{
+            for col in 0..<numColumns{
+                //check for landing
+                if blocks[row][col] != nil && blocks[row][col]!.falling == true {
                     if(row == 0){
                         blocks[row][col]?.falling = false;
                         landedBoyes.insert(blocks[row][col]!)
                         //check for matches
                         let myMatches = checkForMatch(at: Point(x: col, y: row))
                         if myMatches.isEmpty{
-                            blocks[row][col]!.chainCount = 1
+                            if blocks[row][col]!.inChain == true{
+                                blocks[row][col]!.inChain = false
+                                chainBlocksCount -= 1
+                            }
                         }
                         else{
                             matchedBoyes = matchedBoyes.union(myMatches)
                         }
                     }
-                    else if(blocks[row-1][col] != nil){
+                    else if(blocks[row-1][col] != nil || isLocked(pos: Point(x: col, y: row-1))){
                         //check for landing
                         if(blocks[row-1][col]?.falling == false){
                             blocks[row][col]?.falling = false;
@@ -103,21 +105,27 @@ class Level {
                             //check for matches
                             let myMatches = checkForMatch(at: Point(x: col, y: row))
                             if myMatches.isEmpty{
-                                blocks[row][col]!.chainCount = 1
+                                if blocks[row][col]!.inChain == true{
+                                    blocks[row][col]!.inChain = false
+                                    chainBlocksCount -= 1
+                                }
                             }
                             else{
                                 matchedBoyes = matchedBoyes.union(myMatches)
                             }
                         }
                     }
-                    else{
-                        //this block must be falling
-                        blocks[row][col]?.falling = true;
-                    }
                 }
             }
         }
+        
         return (movedBoys, landedBoyes, matchedBoyes)
+    }
+    
+    func endChain(){
+        if chainCount > 2 && chainBlocksCount == 0 {
+            chainCount = 2
+        }
     }
     
     private func initializeBlocks() -> Set<Block> {
@@ -180,7 +188,6 @@ class Level {
             blocks[to.y][to.x] = blockA
             blockA?.column = to.x
             blockA?.row = to.y
-            //blockA?.chainCount = 1
         }
         else{
             blocks[to.y][to.x] = nil
@@ -188,9 +195,8 @@ class Level {
         
         if blockB != nil{
             blocks[from.y][from.x] = blockB
-            blockB?.column = from.x
-            blockB?.row = from.y
-            //blockB?.chainCount = 1
+            blockB!.column = from.x
+            blockB!.row = from.y
         }
         else{
             blocks[from.y][from.x] = nil
@@ -228,7 +234,7 @@ class Level {
                 break
             }
             
-            if(blocks[row][i]?.blockType == blockType){
+            if(blocks[row][i]?.blockType == blockType && blocks[row][i]!.falling == false){
                 horizontal.insert(blocks[row][i]!)
             }
             else{
@@ -243,7 +249,7 @@ class Level {
                 break
             }
             
-            if(blocks[row][i]?.blockType == blockType){
+            if(blocks[row][i]?.blockType == blockType && blocks[row][i]!.falling == false){
                 horizontal.insert(blocks[row][i]!)
             }
             else{
@@ -258,7 +264,7 @@ class Level {
             if isLocked(pos: Point(x:col, y:i)){
                 break
             }
-            if(blocks[i][col]?.blockType == blockType){
+            if(blocks[i][col]?.blockType == blockType && blocks[i][col]!.falling == false){
                 vertical.insert(blocks[i][col]!)
             }
             else{
@@ -274,7 +280,7 @@ class Level {
                 break
             }
             
-            if(blocks[i][col]?.blockType == blockType){
+            if(blocks[i][col]?.blockType == blockType && blocks[i][col]!.falling == false){
                 vertical.insert(blocks[i][col]!)
             }
             else{
@@ -296,20 +302,28 @@ class Level {
     }
     
     func removeBlocks(in blockSet : Set<Block>) {
-        //first calculate highest chain in the match
-        var highestChain: Int = 1
-        for b in blockSet{
-            if b.chainCount > highestChain {
-                highestChain = b.chainCount
-            }
-        }
-        
         for b in blockSet {
-            blocks[b.row][b.column] = nil
             //increment chain for the above block
-            let above = block(atColumn: b.column, row: b.row + 1)
-            if above != nil{
-                above!.chainCount = highestChain + 1
+            var offset: Int = 1
+            var cont: Bool = true
+            while offset + b.row < numRows && cont{
+                let above = block(atColumn: b.column, row: b.row + offset)
+                if above != nil{
+                    if above!.inChain == false {
+                        above!.inChain = true
+                        chainBlocksCount += 1
+                    }
+                    offset += 1
+                }
+                else{
+                    cont = false
+                }
+            }
+            
+            //remove the boye
+            blocks[b.row][b.column] = nil
+            if b.inChain == true{
+                chainBlocksCount -= 1
             }
         }
     }
@@ -355,5 +369,30 @@ class Level {
         
         //fill the bottom up with randos
         return (movedBoyes, newBoyes, matchedBoyes, survive)
+    }
+    
+    func checkForBouncers() -> (Set<Block>, Set<Block>){
+        var bouncers : Set<Block> = []
+        var normal : Set<Block> = []
+        
+        for col in 0..<numColumns{
+            if(blocks[numRows-1][col] != nil || blocks[numRows-2][col] != nil){
+                for row in 0..<numRows{
+                    if !isLocked(pos: Point(x:col, y:row)){
+                        if blocks[row][col] != nil{
+                            bouncers.insert(blocks[row][col]!)
+                        }
+                    }
+                }
+            }
+            else{
+                for row in 0..<numRows{
+                    if blocks[row][col] != nil{
+                        normal.insert(blocks[row][col]!)
+                    }
+                }
+            }
+        }
+        return (normal, bouncers)
     }
 }

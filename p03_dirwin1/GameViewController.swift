@@ -15,6 +15,8 @@ class GameViewController: UIViewController {
     var level: Level!
     var height: Int = 0
     var speed: Int = 5
+    let boostSpeed: Int = 80
+    var savedSpeed: Int = 0
     
     func beginGame() {
       shuffle()
@@ -41,6 +43,7 @@ class GameViewController: UIViewController {
             scene = GameScene(size: skView.bounds.size)
             scene.scaleMode = .aspectFill
             scene.level = level
+            scene.controller = self
             scene.swipeHandler = handleSwipe
             scene.fallHandler = handleFall
             scene.moveHandler = handleMove
@@ -87,22 +90,38 @@ class GameViewController: UIViewController {
         scene.animateFallenBlocks(for: fallen, completion: {})
         scene.animateLanding(for: landed)
         handleMatches(match: match)
+        
+        //check for chain end
+        level.endChain()
     }
     
     private func handleMatches(match: Set<Block>){
         //lock all match positions
         var sortedMatches: [Block] = []
         var chainCount: Int = 1
+        var isChain: Bool = false
         var matchPositions: Set<Point> = []
         for block in match{
-            if block.chainCount > chainCount{
-                chainCount = block.chainCount
+            if block.inChain == true{
+                chainCount = level.chainCount
+                isChain = true
             }
             let col = block.column
             let row = block.row
             let pos = Point(x: col, y: row)
             matchPositions.insert(pos)
             sortedMatches.append(block)
+        }
+        
+        if isChain{
+            level.chainCount += 1
+            //set all of the blocks in the match to a chain so we don't end the chain too early
+            for block in match{
+                if block.inChain == false{
+                    block.inChain = true
+                    level.chainBlocksCount += 1
+                }
+            }
         }
         
         //sort the blocks by position
@@ -141,6 +160,11 @@ class GameViewController: UIViewController {
                     handleLoss()
                 }
             }
+            //check for bouncey boyes
+            let bounced = level.checkForBouncers()
+            scene.stopBouncing(blocks: bounced.0)
+            scene.startBouncing(blocks: bounced.1)
+            
             height = height % 1000
             scene.moveBoard(height: height)
         }
@@ -169,5 +193,14 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    func startBoost(){
+        savedSpeed = speed
+        speed = boostSpeed
+    }
+    
+    func endBoost(){
+        speed = savedSpeed
     }
 }

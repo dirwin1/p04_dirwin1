@@ -85,6 +85,7 @@
 		D7D80D11236201E9002A2A45 /* shine11.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D10236201E9002A2A45 /* shine11.png */; };
 		D7D80D1423622E50002A2A45 /* boostbutton1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D1223622E50002A2A45 /* boostbutton1.png */; };
 		D7D80D1523622E50002A2A45 /* boostbutton2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80D1323622E50002A2A45 /* boostbutton2.png */; };
+		D7D80D172364C694002A2A45 /* FTButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D80D162364C694002A2A45 /* FTButtonNode.swift */; };
 		D7DF521E2344F06F00856752 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF521D2344F06F00856752 /* Block.swift */; };
 /* End PBXBuildFile section */
 
@@ -169,6 +170,7 @@
 		D7D80D10236201E9002A2A45 /* shine11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shine11.png; sourceTree = "<group>"; };
 		D7D80D1223622E50002A2A45 /* boostbutton1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boostbutton1.png; sourceTree = "<group>"; };
 		D7D80D1323622E50002A2A45 /* boostbutton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boostbutton2.png; sourceTree = "<group>"; };
+		D7D80D162364C694002A2A45 /* FTButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTButtonNode.swift; sourceTree = "<group>"; };
 		D7DF521D2344F06F00856752 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -290,6 +292,7 @@
 				D755BA1C234784C40020A691 /* Level.swift */,
 				D74080BA23552A3A006B46DF /* Point.swift */,
 				D74080AE2350C93C006B46DF /* Swap.swift */,
+				D7D80D162364C694002A2A45 /* FTButtonNode.swift */,
 			);
 			path = p03_dirwin1;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D755BA2323478AB00020A691 /* GameScene.swift in Sources */,
+				D7D80D172364C694002A2A45 /* FTButtonNode.swift in Sources */,
 				D7DF521E2344F06F00856752 /* Block.swift in Sources */,
 				D74080AF2350C93C006B46DF /* Swap.swift in Sources */,
 				D72321AB233BA7A800ED8200 /* GameViewController.swift in Sources */,
