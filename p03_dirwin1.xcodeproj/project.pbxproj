@@ -26,8 +26,19 @@
 		D74080B92354B668006B46DF /* spooky-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D74080B42354B668006B46DF /* spooky-Highlighted.png */; };
 		D74080BB23552A3A006B46DF /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74080BA23552A3A006B46DF /* Point.swift */; };
 		D755BA1D234784C40020A691 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D755BA1C234784C40020A691 /* Level.swift */; };
-		D755BA1F23478A3F0020A691 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D755BA1E23478A3F0020A691 /* GameScene.sks */; };
 		D755BA2323478AB00020A691 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D755BA2223478AB00020A691 /* GameScene.swift */; };
+		D7ABDCEF23666E5800B6C54D /* Scream4.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCE923666E5700B6C54D /* Scream4.png */; };
+		D7ABDCF023666E5800B6C54D /* Scream3.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCEA23666E5700B6C54D /* Scream3.png */; };
+		D7ABDCF123666E5800B6C54D /* Scream1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCEB23666E5700B6C54D /* Scream1.png */; };
+		D7ABDCF223666E5800B6C54D /* Scream5.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCEC23666E5700B6C54D /* Scream5.png */; };
+		D7ABDCF323666E5800B6C54D /* Scream6.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCED23666E5700B6C54D /* Scream6.png */; };
+		D7ABDCF423666E5800B6C54D /* Scream2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCEE23666E5800B6C54D /* Scream2.png */; };
+		D7ABDCF623667A1100B6C54D /* kongtext.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCF52366766400B6C54D /* kongtext.ttf */; };
+		D7ABDCF823667B9400B6C54D /* 712_serif.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCF723667B7600B6C54D /* 712_serif.ttf */; };
+		D7ABDCFA2366864900B6C54D /* particle1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCF92366864900B6C54D /* particle1.png */; };
+		D7ABDCFC2366874D00B6C54D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCFB2366874D00B6C54D /* GameScene.sks */; };
+		D7ABDCFF236687AB00B6C54D /* PopParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCFD236687AB00B6C54D /* PopParticle.sks */; };
+		D7ABDD00236687AB00B6C54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCFE236687AB00B6C54D /* Assets.xcassets */; };
 		D7D80CA72359FCF2002A2A45 /* firefall2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CA42359FCF2002A2A45 /* firefall2.png */; };
 		D7D80CA82359FCF2002A2A45 /* firefall3.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CA52359FCF2002A2A45 /* firefall3.png */; };
 		D7D80CA92359FCF2002A2A45 /* firefall1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CA62359FCF2002A2A45 /* firefall1.png */; };
@@ -111,8 +122,19 @@
 		D74080B42354B668006B46DF /* spooky-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spooky-Highlighted.png"; sourceTree = "<group>"; };
 		D74080BA23552A3A006B46DF /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		D755BA1C234784C40020A691 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
-		D755BA1E23478A3F0020A691 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		D755BA2223478AB00020A691 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		D7ABDCE923666E5700B6C54D /* Scream4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Scream4.png; sourceTree = "<group>"; };
+		D7ABDCEA23666E5700B6C54D /* Scream3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Scream3.png; sourceTree = "<group>"; };
+		D7ABDCEB23666E5700B6C54D /* Scream1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Scream1.png; sourceTree = "<group>"; };
+		D7ABDCEC23666E5700B6C54D /* Scream5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Scream5.png; sourceTree = "<group>"; };
+		D7ABDCED23666E5700B6C54D /* Scream6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Scream6.png; sourceTree = "<group>"; };
+		D7ABDCEE23666E5800B6C54D /* Scream2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Scream2.png; sourceTree = "<group>"; };
+		D7ABDCF52366766400B6C54D /* kongtext.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = kongtext.ttf; path = ../../../../../../Downloads/kongtext/kongtext.ttf; sourceTree = "<group>"; };
+		D7ABDCF723667B7600B6C54D /* 712_serif.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = 712_serif.ttf; path = "../../../../../../Downloads/7-12-serif/712_serif.ttf"; sourceTree = "<group>"; };
+		D7ABDCF92366864900B6C54D /* particle1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle1.png; sourceTree = "<group>"; };
+		D7ABDCFB2366874D00B6C54D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = ../../../../../../../.Trash/GameScene.sks; sourceTree = "<group>"; };
+		D7ABDCFD236687AB00B6C54D /* PopParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PopParticle.sks; sourceTree = "<group>"; };
+		D7ABDCFE236687AB00B6C54D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D7D80CA42359FCF2002A2A45 /* firefall2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefall2.png; sourceTree = "<group>"; };
 		D7D80CA52359FCF2002A2A45 /* firefall3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefall3.png; sourceTree = "<group>"; };
 		D7D80CA62359FCF2002A2A45 /* firefall1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefall1.png; sourceTree = "<group>"; };
@@ -188,6 +210,7 @@
 		D70F58F0234B817900F4AF18 /* Sprites.atlas */ = {
 			isa = PBXGroup;
 			children = (
+				D7ABDCFB2366874D00B6C54D /* GameScene.sks */,
 				D7D80CD6235BAC06002A2A45 /* electricshock.png */,
 				D7D80CD9235BAC06002A2A45 /* fireshock.png */,
 				D7D80CDA235BAC06002A2A45 /* grassshock.png */,
@@ -255,6 +278,13 @@
 				D7D80D10236201E9002A2A45 /* shine11.png */,
 				D7D80D1223622E50002A2A45 /* boostbutton1.png */,
 				D7D80D1323622E50002A2A45 /* boostbutton2.png */,
+				D7ABDCEB23666E5700B6C54D /* Scream1.png */,
+				D7ABDCEE23666E5800B6C54D /* Scream2.png */,
+				D7ABDCEA23666E5700B6C54D /* Scream3.png */,
+				D7ABDCE923666E5700B6C54D /* Scream4.png */,
+				D7ABDCEC23666E5700B6C54D /* Scream5.png */,
+				D7ABDCED23666E5700B6C54D /* Scream6.png */,
+				D7ABDCF92366864900B6C54D /* particle1.png */,
 			);
 			path = Sprites.atlas;
 			sourceTree = "<group>";
@@ -262,6 +292,8 @@
 		D7232196233BA7A700ED8200 = {
 			isa = PBXGroup;
 			children = (
+				D7ABDCFD236687AB00B6C54D /* PopParticle.sks */,
+				D7ABDCFE236687AB00B6C54D /* Assets.xcassets */,
 				D72321A1233BA7A800ED8200 /* p03_dirwin1 */,
 				D72321A0233BA7A800ED8200 /* Products */,
 			);
@@ -283,7 +315,6 @@
 				D72321A2233BA7A800ED8200 /* AppDelegate.swift */,
 				D72321A6233BA7A800ED8200 /* Actions.sks */,
 				D72321AA233BA7A800ED8200 /* GameViewController.swift */,
-				D755BA1E23478A3F0020A691 /* GameScene.sks */,
 				D72321AC233BA7A800ED8200 /* Main.storyboard */,
 				D72321AF233BA7AF00ED8200 /* Assets.xcassets */,
 				D72321B1233BA7AF00ED8200 /* LaunchScreen.storyboard */,
@@ -293,6 +324,8 @@
 				D74080BA23552A3A006B46DF /* Point.swift */,
 				D74080AE2350C93C006B46DF /* Swap.swift */,
 				D7D80D162364C694002A2A45 /* FTButtonNode.swift */,
+				D7ABDCF52366766400B6C54D /* kongtext.ttf */,
+				D7ABDCF723667B7600B6C54D /* 712_serif.ttf */,
 			);
 			path = p03_dirwin1;
 			sourceTree = "<group>";
@@ -365,20 +398,24 @@
 				D7D80CDD235BAC06002A2A45 /* spookyshock.png in Resources */,
 				D7D80CFA23614A92002A2A45 /* chain-9.png in Resources */,
 				D72321AE233BA7A800ED8200 /* Main.storyboard in Resources */,
+				D7ABDCF023666E5800B6C54D /* Scream3.png in Resources */,
 				D7D80CDB235BAC06002A2A45 /* electricshock.png in Resources */,
 				D7D80CDF235BAC06002A2A45 /* grassshock.png in Resources */,
 				D7D80D0A2361FE87002A2A45 /* shine7.png in Resources */,
 				D7D80CC1235BA2CF002A2A45 /* electricfall2.png in Resources */,
 				D7D80D0E2361FE87002A2A45 /* shine1.png in Resources */,
-				D755BA1F23478A3F0020A691 /* GameScene.sks in Resources */,
+				D7ABDCFC2366874D00B6C54D /* GameScene.sks in Resources */,
+				D7ABDD00236687AB00B6C54D /* Assets.xcassets in Resources */,
 				D7D80CB8235BA076002A2A45 /* waterfall1.png in Resources */,
 				D7D80CE9236134DC002A2A45 /* combo-4.png in Resources */,
+				D7ABDCF623667A1100B6C54D /* kongtext.ttf in Resources */,
 				D7D80D062361FE87002A2A45 /* shine3.png in Resources */,
 				D7D80CE7236134DC002A2A45 /* combo-7.png in Resources */,
 				D7D80CD5235BA76D002A2A45 /* waterflash.png in Resources */,
 				D7D80CF623614A92002A2A45 /* chain-2.png in Resources */,
 				D72321B0233BA7AF00ED8200 /* Assets.xcassets in Resources */,
 				D7D80CC9235BA2D8002A2A45 /* spookyfall2.png in Resources */,
+				D7ABDCEF23666E5800B6C54D /* Scream4.png in Resources */,
 				D7D80CA82359FCF2002A2A45 /* firefall3.png in Resources */,
 				D7D80CD3235BA76D002A2A45 /* electricflash.png in Resources */,
 				D7D80CC3235BA2CF002A2A45 /* electricfall3.png in Resources */,
@@ -387,9 +424,11 @@
 				D7D80CCB235BA2D8002A2A45 /* spookyfall1.png in Resources */,
 				D7D80CA72359FCF2002A2A45 /* firefall2.png in Resources */,
 				D7D80D1423622E50002A2A45 /* boostbutton1.png in Resources */,
+				D7ABDCF323666E5800B6C54D /* Scream6.png in Resources */,
 				D7D80CB1235B9F19002A2A45 /* grassfall2.png in Resources */,
 				D7D80CB9235BA076002A2A45 /* waterfall4.png in Resources */,
 				D7D80D082361FE87002A2A45 /* shine6.png in Resources */,
+				D7ABDCF123666E5800B6C54D /* Scream1.png in Resources */,
 				D70F58F8234B822100F4AF18 /* grass.png in Resources */,
 				D7D80CB2235B9F19002A2A45 /* grassfall3.png in Resources */,
 				D7D80CA92359FCF2002A2A45 /* firefall1.png in Resources */,
@@ -397,15 +436,18 @@
 				D7D80D092361FE87002A2A45 /* shine2.png in Resources */,
 				D70F58FA234B822100F4AF18 /* fire.png in Resources */,
 				D70F58F9234B822100F4AF18 /* water.png in Resources */,
+				D7ABDCFF236687AB00B6C54D /* PopParticle.sks in Resources */,
 				D7D80CC0235BA2CF002A2A45 /* electricfall1.png in Resources */,
 				D7D80CEA236134DC002A2A45 /* combo-8.png in Resources */,
 				D7D80CE8236134DC002A2A45 /* combo-5.png in Resources */,
+				D7ABDCF423666E5800B6C54D /* Scream2.png in Resources */,
 				D72321B3233BA7AF00ED8200 /* LaunchScreen.storyboard in Resources */,
 				D7D80CF423614A92002A2A45 /* chain-6.png in Resources */,
 				D7D80CE6236134DC002A2A45 /* combo-9.png in Resources */,
 				D7D80D1523622E50002A2A45 /* boostbutton2.png in Resources */,
 				D7D80CF523614A92002A2A45 /* chain-4.png in Resources */,
 				D72321A7233BA7A800ED8200 /* Actions.sks in Resources */,
+				D7ABDCF223666E5800B6C54D /* Scream5.png in Resources */,
 				D7D80CF823614A92002A2A45 /* chain-3.png in Resources */,
 				D7D80CD2235BA76D002A2A45 /* grassflash.png in Resources */,
 				D7D80CC8235BA2D8002A2A45 /* spookyfall3.png in Resources */,
@@ -423,6 +465,8 @@
 				D7D80CB3235B9F19002A2A45 /* grassfall4.png in Resources */,
 				D7D80CDC235BAC06002A2A45 /* watershock.png in Resources */,
 				D7D80CDE235BAC06002A2A45 /* fireshock.png in Resources */,
+				D7ABDCF823667B9400B6C54D /* 712_serif.ttf in Resources */,
+				D7ABDCFA2366864900B6C54D /* particle1.png in Resources */,
 				D7D80CD4235BA76D002A2A45 /* spookyflash.png in Resources */,
 				D7D80D0C2361FE87002A2A45 /* shine10.png in Resources */,
 				D7D80D0D2361FE87002A2A45 /* shine9.png in Resources */,

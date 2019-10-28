@@ -16,11 +16,14 @@ class GameScene: SKScene {
     var speedUpHandler: (() -> Void)?
     private var shineTextures : [SKTexture]  = []
     private var boostTextures : [SKTexture] = []
+    private var screamTextures : [SKTexture] = []
+    private var particleTexture: SKTexture = SKTexture(imageNamed: "particle1")
     private var selectionSprite = SKSpriteNode()
     private var speedUpPeriod: Int = 750 //speed up every
     private var speedUpCounter: Int = 0
     private var running: Bool = true
-    var timer : SKLabelNode = SKLabelNode()
+    var timer : SKLabelNode = SKLabelNode(fontNamed: "7:12 Serif Regular")
+    var score : SKLabelNode = SKLabelNode(fontNamed: "7:12 Serif Regular")
     
     //Immediately after leveTimerValue variable is set, update label's text
     var timerValue: Int = 0 {
@@ -34,6 +37,12 @@ class GameScene: SKScene {
                 sec = "\(timerValue%60)"
             }
             timer.text = "\(min):\(sec)"
+        }
+    }
+    
+    var scoreVal: Int = 0 {
+        didSet{
+            score.text = "\(scoreVal)"
         }
     }
     
@@ -55,10 +64,11 @@ class GameScene: SKScene {
         
         //figure out block size
         let displaySize: CGRect = UIScreen.main.bounds
-        let displayWidth = displaySize.width
+        //let displayWidth = displaySize.width
         let displayHeight = displaySize.height
         
-        tileWidth = min(((0.85 * displayWidth) / 6), (0.85 * displayHeight / 12))
+        //tileWidth = min(((0.8 * displayWidth) / 6), (0.8 * displayHeight / 12))
+        tileWidth = (0.77 * displayHeight / 12)
         tileHeight = tileWidth
         
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -80,8 +90,8 @@ class GameScene: SKScene {
         
         //setup timer
         timer.fontColor = UIColor.white
-        timer.fontSize = 40
-        timer.position = CGPoint(x: 0, y: (displayHeight / 2) - tileHeight * 1.25)
+        timer.fontSize = 48
+        timer.position = CGPoint(x: -tileWidth * 2.15, y: (displayHeight / 2) - tileHeight * 1.18)
         timer.text = "\(timerValue)"
         border.addChild(timer)
         
@@ -91,6 +101,14 @@ class GameScene: SKScene {
         })
         let sequence = SKAction.sequence([wait,block])
         run(SKAction.repeatForever(sequence), withKey: "countdown")
+        
+        //setup score
+        score.fontColor = UIColor.white
+        score.horizontalAlignmentMode = .right
+        score.fontSize = 48
+        score.position = CGPoint(x: tileWidth * 3, y: (displayHeight / 2) - tileHeight * 1.18)
+        score.text = "0"
+        border.addChild(score)
         
         //setup boost button
         for i in 1...2{
@@ -113,6 +131,14 @@ class GameScene: SKScene {
             shinetex.filteringMode = .nearest
             shineTextures.append(shinetex)
         }
+        
+        for i in 1...6{
+            let screamtex = SKTexture(imageNamed: "Scream\(i)")
+            screamtex.filteringMode = .nearest
+            screamTextures.append(screamtex)
+        }
+        
+        particleTexture.filteringMode = .nearest
 
         let layerPosition = CGPoint(
             x: -tileWidth * CGFloat(numColumns) / 2,
@@ -349,6 +375,8 @@ class GameScene: SKScene {
     }
     
     func animateMatchedBlocks(for blocks: [Block], chain: Int, completion: @escaping () -> Void) {
+        let scorePerBlock: Int = blocks.count
+        
         //show indicators
         if blocks.count > 0 {
             let pos = pointFor(column: blocks.first!.column, row: blocks.first!.row)
@@ -369,16 +397,26 @@ class GameScene: SKScene {
                     sprite.removeAllActions()
                     sprite.zPosition = 100
                     
+                    //add the screaming face on top
+                    let scream = SKSpriteNode(texture: screamTextures[0])
+                    scream.size = CGSize(width: tileWidth, height: tileHeight)
+                    scream.run(SKAction.repeatForever(SKAction.animate(with: screamTextures, timePerFrame: 0.04)))
+                    
                     let flash = SKAction.animate(with: block.flashFrames, timePerFrame: 0.04, resize: false, restore: true)
                     let shock = SKAction.run({
-                        sprite.texture = block.shockTexture
+                        sprite.texture = block.highLightTexture
+                        sprite.addChild(scream)
                     })
                     let wait = SKAction.wait(forDuration: waitTime)
                     let grow = SKAction.scale(to: 1.5, duration: 0.1)
                     grow.timingMode = .easeIn
-                    let die = SKAction.removeFromParent()
+                    let die = SKAction.run({
+                        self.createPopParticles(position: sprite.position, num: 2 + chain * 2)
+                        self.scoreVal += (scorePerBlock * chain)
+                    })
                     
-                    sprite.run(SKAction.sequence([flash, flash, shock, wait, grow, die]))
+                    sprite.run(SKAction.sequence([flash, flash, shock, wait, grow, die, SKAction.removeFromParent()]))
+
                     
                     waitTime += 0.15
                 }
@@ -457,6 +495,32 @@ class GameScene: SKScene {
                 sprite.removeAction(forKey: "bouncing")
                 sprite.texture = block.origTexture
             }
+        }
+    }
+    
+    func createPopParticles(position : CGPoint, num: Int){
+        for i in 1...num{
+            let dist = Double(tileWidth) * 2
+            let angle : Double = (2 * Double.pi * (Double(i) / Double(num))) + (0.25 * Double.pi)
+            let sprite = SKSpriteNode(texture: particleTexture)
+            sprite.size = CGSize(width: tileWidth/2, height: tileHeight/2)
+            blocksLayer.addChild(sprite)
+            sprite.position = CGPoint(x: position.x + tileWidth/2 * CGFloat(cos(angle)), y: position.y + tileHeight/2 * CGFloat(sin(angle)))
+            sprite.zPosition = 1000
+            
+            let move = SKAction.move(by: CGVector(dx: dist * cos(angle), dy: dist * sin(angle)), duration: 0.5)
+            let rotate = SKAction.rotate(byAngle: 720, duration: 0.5)
+            let scale = SKAction.scale(to: 0, duration: 0.5)
+            let fade = SKAction.fadeOut(withDuration: 0.5)
+            move.timingMode = .easeOut
+            rotate.timingMode = .easeOut
+            fade.timingMode = .easeIn
+            scale.timingMode = .easeIn
+            
+            sprite.run(rotate)
+            //sprite.run(fade)
+            sprite.run(scale)
+            sprite.run(SKAction.sequence([move, SKAction.removeFromParent()]))
         }
     }
 }
