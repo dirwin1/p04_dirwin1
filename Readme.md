@@ -1,15 +1,20 @@
-Welcome to Tetris Attack for iOS v0.9.1.21!!
+Welcome to A GAME WITH BLOCKS V0.9
 
-This is a clone of the SNES game Tetris Attack for iOS written using swift
-and SpriteKit.
+A game with blocks is an action match 3 puzzle game inspired by tetris attack
 
-While not all features have been implemented, my version includes:
-    -Random starting configuration that guarantees no matches
-    -Swipe left/right on the block you want to swap to swap blocks
-    -matches of 3 or more will disappear with a cool animation
-        -matches may be of two different block types as well, if they are made
-        on the same swipe, then they count towards the same combo
-        -support for different shapes of matches as well
-    -blocks will fall down if there is nothing underneath them
-    -falling blocks create opportunities to create chains, where falling blocks
-    can create new matches
+How to play:
+    -swipe left or right on any block to swap it with its neighbor
+    -if you create a match of 3 or more either horizontally or vertically, they will disappear, and the blocks above it will
+    fall down due to gravity
+    -As you play, new blocks continually rise from the bottom of the screen, if they reach the top, you lose
+    -Try to score as much as you can before the blocks hit the top
+    -Getting a match of more than 3 blocks will count as a combo, and will give you more points
+    -You can chain matches by having blocks land in a match to multiply a matches score
+    -Press the arrow on the bottom of the screen to get more blocks quickly
+    -Block spawn rate speeds up as you play
+
+Features:
+    -Stats page to track total blocks broken, highscore, highest combo and highest chain
+    -Main menu
+    -Pause menu with restart and go to menu button (automatically pause when app goes into the background)
+    
