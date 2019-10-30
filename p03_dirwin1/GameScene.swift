@@ -14,27 +14,56 @@ class GameScene: SKScene {
     var fallHandler: (() -> Void)?
     var moveHandler: (() -> Void)?
     var speedUpHandler: (() -> Void)?
+    var pauseHandler: (() -> Void)?
+    var unPauseHandler: (() -> Void)?
+    var restartHandler: (() -> Void)?
+    var menuHandler: (() -> Void)?
     private var shineTextures : [SKTexture]  = []
     private var boostTextures : [SKTexture] = []
+    private var pauseButtonTextures : [SKTexture] = []
     private var screamTextures : [SKTexture] = []
     private var particleTexture: SKTexture = SKTexture(imageNamed: "particle1")
     private var selectionSprite = SKSpriteNode()
     private var speedUpPeriod: Int = 750 //speed up every
     private var speedUpCounter: Int = 0
-    private var running: Bool = true
+    private var running: Bool = false
+    private var gamePaused: Bool = false
     var timer : SKLabelNode = SKLabelNode(fontNamed: "7:12 Serif Regular")
     var score : SKLabelNode = SKLabelNode(fontNamed: "7:12 Serif Regular")
+    var pausedLabel: SKLabelNode? = nil
+    var countDownLabel: SKLabelNode? = nil
+    var speedLabel: SKLabelNode = SKLabelNode(fontNamed: "7:12 Serif Regular")
+    var highScoreLabel: SKLabelNode = SKLabelNode(fontNamed: "7:12 Serif Regular")
+    var gameOverLabel: SKLabelNode? = nil
+    var retryButton: FTButtonNode? = nil
+    var menuButton: FTButtonNode? = nil
+    var continueButton: FTButtonNode? = nil
+    var dimmer: SKSpriteNode? = nil
+    
+    let notificationCenter = NotificationCenter.default
+    @objc func appMovedCameBack() {
+        if running == true{
+            animatePause()
+        }
+    }
     
     //Immediately after leveTimerValue variable is set, update label's text
     var timerValue: Int = 0 {
         didSet {
-            let min = timerValue / 60
+            let min: String
             var sec: String
             if timerValue % 60 < 10{
                 sec = "0\(timerValue%60)"
             }
             else{
                 sec = "\(timerValue%60)"
+            }
+            
+            if timerValue / 60 < 10 {
+                min = "0\(timerValue / 60)"
+            }
+            else{
+                min = "\(timerValue / 60)"
             }
             timer.text = "\(min):\(sec)"
         }
@@ -43,6 +72,18 @@ class GameScene: SKScene {
     var scoreVal: Int = 0 {
         didSet{
             score.text = "\(scoreVal)"
+        }
+    }
+    
+    var speedVal: Int = 0 {
+        didSet{
+            speedLabel.text = "\(speedVal)"
+        }
+    }
+    
+    var highScoreVal: Int = 0{
+        didSet{
+            highScoreLabel.text = "Hi: \(highScoreVal)"
         }
     }
     
@@ -66,6 +107,7 @@ class GameScene: SKScene {
         let displaySize: CGRect = UIScreen.main.bounds
         //let displayWidth = displaySize.width
         let displayHeight = displaySize.height
+        let displayWidth = displaySize.width
         
         //tileWidth = min(((0.8 * displayWidth) / 6), (0.8 * displayHeight / 12))
         tileWidth = (0.77 * displayHeight / 12)
@@ -90,25 +132,42 @@ class GameScene: SKScene {
         
         //setup timer
         timer.fontColor = UIColor.white
-        timer.fontSize = 48
+        timer.fontSize = 40
         timer.position = CGPoint(x: -tileWidth * 2.15, y: (displayHeight / 2) - tileHeight * 1.18)
-        timer.text = "\(timerValue)"
+        timer.text = "0:00"
         border.addChild(timer)
         
         let wait = SKAction.wait(forDuration: 1) //change countdown speed here
         let block = SKAction.run({
-            self.timerValue += 1
+            if self.running{
+                self.timerValue += 1
+            }
         })
         let sequence = SKAction.sequence([wait,block])
         run(SKAction.repeatForever(sequence), withKey: "countdown")
         
-        //setup score
+        //setup score label
         score.fontColor = UIColor.white
         score.horizontalAlignmentMode = .right
-        score.fontSize = 48
+        score.fontSize = 40
         score.position = CGPoint(x: tileWidth * 3, y: (displayHeight / 2) - tileHeight * 1.18)
         score.text = "0"
         border.addChild(score)
+        
+        //setup speed label
+        speedLabel.fontColor = UIColor.white
+        speedLabel.fontSize = 40
+        speedLabel.position = CGPoint(x: 0, y: (displayHeight / 2) - tileHeight * 1.18)
+        speedLabel.text = "5"
+        border.addChild(speedLabel)
+        
+        //setup highscore label
+        highScoreLabel.fontColor = UIColor.black
+        highScoreLabel.alpha = 0.35
+        highScoreLabel.fontSize = 36
+        highScoreLabel.position = CGPoint(x: 0, y: (displayHeight / 2) - tileHeight * 2.25)
+        highScoreLabel.text = "hi 100250"
+        background.addChild(highScoreLabel)
         
         //setup boost button
         for i in 1...2{
@@ -124,6 +183,25 @@ class GameScene: SKScene {
         
         border.addChild(boostButton)
         boostButton.position = CGPoint(x: 0, y: (-displayHeight / 2) + tileHeight * 0.75)
+        
+        //setup pause button
+        for i in 1...2{
+            let tex = SKTexture(imageNamed: "pausebutton\(i)")
+            tex.filteringMode = .nearest
+            pauseButtonTextures.append(tex)
+        }
+        
+        let pauseButton = FTButtonNode(normalTexture: pauseButtonTextures[0], selectedTexture: pauseButtonTextures[1], disabledTexture: pauseButtonTextures[1])
+        pauseButton.size = CGSize(width: tileWidth, height: tileHeight)
+        border.addChild(pauseButton)
+        pauseButton.position = CGPoint(x: (-displayWidth / 2) + tileWidth, y: (-displayHeight / 2) + tileHeight * 0.75)
+        pauseButton.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(animatePause))
+        
+        //create menu buttons
+        createMenuButton(button: &menuButton, text: "menu", color: UIColor.red, selector: #selector(goToMenu))
+        createMenuButton(button: &retryButton, text: "retry", color: UIColor.blue, selector: #selector(restart))
+        createMenuButton(button: &continueButton, text: "continue", color: UIColor.green, selector: #selector(animatePause))
+        
         
         //cache effects
         for i in 1...11{
@@ -146,6 +224,9 @@ class GameScene: SKScene {
 
         blocksLayer.position = layerPosition
         gameLayer.addChild(blocksLayer)
+        
+        //Pause when the app goes out of scope
+        notificationCenter.addObserver(self, selector: #selector(appMovedCameBack), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     
@@ -308,11 +389,13 @@ class GameScene: SKScene {
     }
     
     private func trySwap(horizontalDelta: Int) {
-        let toColumn = swipeFromBlock!.column + horizontalDelta
-        guard toColumn >= 0 && toColumn < numColumns else { return }
+        if running {
+            let toColumn = swipeFromBlock!.column + horizontalDelta
+            guard toColumn >= 0 && toColumn < numColumns else { return }
 
-        if let handler = swipeHandler{
-            handler(Point(x: swipeFromBlock!.column, y: swipeFromBlock!.row), Point(x: toColumn, y: swipeFromBlock!.row))
+            if let handler = swipeHandler{
+                handler(Point(x: swipeFromBlock!.column, y: swipeFromBlock!.row), Point(x: toColumn, y: swipeFromBlock!.row))
+            }
         }
     }
     
@@ -334,28 +417,25 @@ class GameScene: SKScene {
         
         let duration: TimeInterval = 0.05
         
-        if blockA != nil{
-            let spriteA = blockA?.sprite!
-            spriteA?.zPosition = 100
+        if let blocka = blockA {
+            let spriteA = blocka.sprite!
+            spriteA.zPosition = 100
             
             let moveA = SKAction.move(to: posB, duration: duration)
             moveA.timingMode = .easeOut
-            spriteA?.run(moveA)
+            spriteA.run(moveA)
         }
         
-        if blockB != nil{
-            let spriteB = blockB?.sprite!
-            spriteB?.zPosition = 90
+        if let blockb = blockB{
+            let spriteB = blockb.sprite!
+            spriteB.zPosition = 90
             
             let moveB = SKAction.move(to: posA, duration: duration)
             moveB.timingMode = .easeOut
-            spriteB?.run(moveB)
+            spriteB.run(moveB)
         }
         
-        var waitDur = 2 * duration
-        if level.block(atColumn: to.x, row: to.y - 1) == nil{
-            waitDur += 0.05
-        }
+        let waitDur = 2 * duration
         
         run(SKAction.wait(forDuration: waitDur), completion: completion)
         //run(swapSound)
@@ -451,7 +531,107 @@ class GameScene: SKScene {
         //shake the screen
         shake(times: 30, ampX: 30, ampY: 30)
         
+        var waitToShrink: Double = 1
         //kill all of the blocks
+        for row in (0..<numRows).reversed(){
+            for col in 0..<numColumns{
+                if let block = level.block(atColumn: col, row: row){
+                    if let sprite = block.sprite{
+                        killSprite(sprite: sprite, waitToShrink: waitToShrink)
+                    }
+                }
+            }
+            waitToShrink += 0.075
+        }
+        
+        //don't forget the new row
+        for col in 0..<numColumns{
+            if let block = level.upComingRow[col] {
+                if let sprite = block.sprite{
+                    killSprite(sprite: sprite, waitToShrink: waitToShrink)
+                }
+            }
+        }
+        
+        //now write out loser
+        gameOverLabel = SKLabelNode(fontNamed: "7:12 Serif Regular")
+        gameOverLabel?.position = CGPoint(x: 0, y: self.tileHeight * 2)
+        gameOverLabel?.fontSize = 64
+        gameOverLabel?.color = UIColor.white
+        gameOverLabel?.alpha = 0
+        addChild(gameOverLabel!)
+        gameOverLabel!.text = "loser"
+        
+        let showGameOver = SKAction.run({
+            self.gameOverLabel!.run(SKAction.fadeIn(withDuration: 1))
+        })
+        
+        let showButtons = SKAction.run({
+            self.showMenuButton(button: &self.retryButton, yPos: 0)
+            self.showMenuButton(button: &self.menuButton, yPos: -self.tileHeight * 1.25)
+        })
+        
+        run(SKAction.sequence([SKAction.wait(forDuration: waitToShrink), showGameOver, showButtons]))
+    }
+    
+    func createMenuButton(button: inout FTButtonNode?, text: String, color: UIColor, selector: Selector){
+        let jelly1 = SKTexture(imageNamed: "jellybutton1")
+        let jelly2 = SKTexture(imageNamed: "jellybutton2")
+        jelly1.filteringMode = .nearest
+        jelly2.filteringMode = .nearest
+        
+        //add in menu button
+        button = FTButtonNode(normalTexture: jelly1, selectedTexture: jelly2, disabledTexture: jelly2)
+        button!.size = CGSize(width: 5 * tileWidth, height: tileHeight)
+        button!.color = color
+        button!.colorBlendFactor = 0.65
+        button!.setButtonLabel(title: NSString(string: text), font: "7:12 Serif Regular", fontSize: 40)
+        button!.zPosition = 10000
+        
+        button!.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: selector)
+    }
+    
+    func showMenuButton(button: inout FTButtonNode?, yPos: CGFloat){
+        if let butt = button{
+            addChild(butt)
+            butt.position = CGPoint(x: 0, y: yPos)
+        }
+    }
+    
+    func hideMenuButton(button: inout FTButtonNode?){
+        if let butt = button {
+            butt.removeFromParent()
+        }
+    }
+    
+    func killSprite(sprite: SKSpriteNode, waitToShrink: Double){
+        let background = SKSpriteNode(texture: sprite.texture)
+        background.color = UIColor.black
+        background.colorBlendFactor = 1
+        background.alpha = 0
+        background.size = sprite.size
+        background.anchorPoint = CGPoint(x: 0.5, y: 0)
+        background.zPosition = sprite.zPosition + 1
+
+        sprite.addChild(background)
+        background.run(SKAction.fadeIn(withDuration: 1))
+        
+        //add the screaming face on top
+        let scream = SKSpriteNode(texture: screamTextures[0])
+        scream.size = CGSize(width: tileWidth, height: tileHeight)
+        scream.anchorPoint = CGPoint(x: 0.5, y: 0)
+        scream.zPosition = sprite.zPosition + 2
+        //let tpf : Double = Double(Int(arc4random_uniform(6))) / 10.0
+        let tpf: Double = 0.04
+        scream.run(SKAction.repeatForever(SKAction.animate(with: screamTextures, timePerFrame: tpf)))
+        sprite.addChild(scream)
+        
+        sprite.anchorPoint = CGPoint(x: 0.5, y: 0)
+        sprite.position = CGPoint(x: sprite.position.x, y: sprite.position.y - sprite.size.height / 2)
+        
+        let wait = SKAction.wait(forDuration: waitToShrink)
+        let shrink = SKAction.scale(to: CGSize(width: sprite.size.width, height: 0), duration: 0.075)
+        sprite.run(SKAction.sequence([wait, shrink, SKAction.removeFromParent()]))
     }
     
     func shake(times: Int, ampX: Int, ampY: Int) {
@@ -521,6 +701,103 @@ class GameScene: SKScene {
             //sprite.run(fade)
             sprite.run(scale)
             sprite.run(SKAction.sequence([move, SKAction.removeFromParent()]))
+        }
+    }
+    
+    func animateStartCountdown(){
+        //setup timer
+        var timeLeft: Int = 3
+        
+        countDownLabel = SKLabelNode(fontNamed: "7:12 Serif Regular")
+        countDownLabel!.fontColor = UIColor.white
+        countDownLabel!.fontSize = 72
+        countDownLabel!.position = CGPoint(x: 0, y: 0)
+        countDownLabel!.text = "\(timeLeft)"
+        countDownLabel!.zPosition = 10000
+        addChild(countDownLabel!)
+        
+        let wait = SKAction.wait(forDuration: 1) //change countdown speed here
+        let block = SKAction.run({
+            timeLeft -= 1
+            self.countDownLabel!.text = "\(timeLeft)"
+        })
+        let start = SKAction.run({
+            self.countDownLabel!.removeFromParent()
+            self.running = true
+        })
+        
+        countDownLabel!.run(SKAction.sequence([SKAction.repeat(SKAction.sequence([wait, block]), count: 3), start]))
+    }
+    
+    @objc func animatePause(){
+        if gamePaused{
+            //unpaused
+            if let p = pausedLabel{
+                p.removeFromParent()
+            }
+            
+            unDimBackground()
+            
+            pausedLabel = nil
+            hideMenuButton(button: &menuButton)
+            hideMenuButton(button: &retryButton)
+            hideMenuButton(button: &continueButton)
+            
+            animateStartCountdown()
+            gamePaused = false
+        }
+        else {
+            //pause
+            running = false
+            
+            dimBackground()
+            if let countDown = countDownLabel {
+                countDown.removeAllActions()
+                countDown.removeFromParent()
+            }
+            
+            countDownLabel = nil
+            
+            //create the pause menu
+            pausedLabel = SKLabelNode(fontNamed: "7:12 Serif Regular")
+            pausedLabel!.fontColor = UIColor.white
+            pausedLabel!.fontSize = 64
+            pausedLabel!.position = CGPoint(x: 0, y: tileHeight * 2)
+            pausedLabel!.text = "paused"
+            pausedLabel!.zPosition = 10000
+            addChild(pausedLabel!)
+            
+            showMenuButton(button: &continueButton, yPos: 0)
+            showMenuButton(button: &retryButton, yPos: -tileHeight * 1.25)
+            showMenuButton(button: &menuButton, yPos: -tileHeight * 2.5)
+            
+            gamePaused = true
+        }
+    }
+    
+    func dimBackground(){
+        dimmer = SKSpriteNode(color: UIColor.black, size: self.size)
+        dimmer!.alpha = 0.75
+        dimmer!.zPosition = 9900
+        dimmer!.position = CGPoint(x: 0, y: 0)
+        self.addChild(dimmer!)
+    }
+    
+    func unDimBackground(){
+        if let dim = dimmer{
+            dim.removeFromParent()
+        }
+    }
+    
+    @objc func goToMenu(){
+        if let handler = menuHandler {
+            handler()
+        }
+    }
+    
+    @objc func restart(){
+        if let handler = restartHandler{
+            handler()
         }
     }
 }

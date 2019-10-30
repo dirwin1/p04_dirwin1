@@ -11,20 +11,23 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    var profile: Profile!
     var scene: GameScene!
     var level: Level!
     var height: Int = 0
+    let maxHeight: Int = 1000
     var speed: Int = 5
     let boostSpeed: Int = 80
-    var savedSpeed: Int = 0
+    var savedSpeed: Int = 5
     
     func beginGame() {
-      shuffle()
+        shuffle()
+        scene.animateStartCountdown()
     }
 
     func shuffle() {
-      let newBlocks = level.shuffle()
-      scene.addSprites(for: newBlocks)
+        let newBlocks = level.shuffle()
+        scene.addSprites(for: newBlocks)
     }
 
     override func viewDidLoad() {
@@ -37,25 +40,67 @@ class GameViewController: UIViewController {
             let skView = view
             skView.isMultipleTouchEnabled = false
             
-            level = Level()
-            
-            // Create and configure the scene.
-            scene = GameScene(size: skView.bounds.size)
-            scene.scaleMode = .aspectFill
-            scene.level = level
-            scene.controller = self
-            scene.swipeHandler = handleSwipe
-            scene.fallHandler = handleFall
-            scene.moveHandler = handleMove
-            scene.speedUpHandler = handleSpeedUp
-            
             view.showsFPS = true
             view.showsNodeCount = true
             
-            beginGame()
+            profile = Profile()
             
             // Present the scene.
-            skView.presentScene(scene)
+            goToMenu()
+        }
+    }
+    
+    func initializeGameScene(){
+        // Create and configure the scene.
+        scene.scaleMode = .aspectFill
+        scene.level = level
+        scene.controller = self
+        scene.swipeHandler = handleSwipe
+        scene.fallHandler = handleFall
+        scene.moveHandler = handleMove
+        scene.speedUpHandler = handleSpeedUp
+        scene.restartHandler = restartGame
+        scene.menuHandler = goToMenu
+        
+        height = 0
+        speed = 5
+        savedSpeed = 5
+    }
+    
+    func restartGame(){
+        if let view = self.view as! SKView? {
+            level = Level()
+            
+            scene = GameScene(size: view.bounds.size)
+            initializeGameScene()
+            
+            let transition = SKTransition.fade(withDuration: 1.0) // create type of transition (you can check in documentation for more transtions)
+            
+            beginGame()
+            
+            view.presentScene(scene, transition: transition)
+        }
+    }
+    
+    func goToMenu(){
+        if let view = self.view as! SKView? {
+            let menuScene = MenuScene(size: view.bounds.size)
+            menuScene.playHandler = restartGame
+            menuScene.statsHandler = goToStats
+            
+            let transition = SKTransition.fade(withDuration: 1.0)
+            view.presentScene(menuScene, transition: transition)
+        }
+    }
+    
+    func goToStats(){
+        if let view = self.view as! SKView? {
+            let statsScene = StatsScene(size: view.bounds.size)
+            statsScene.backHandler = goToMenu
+            statsScene.profile = profile
+            
+            let transition = SKTransition.fade(withDuration: 1.0)
+            view.presentScene(statsScene, transition: transition)
         }
     }
     
@@ -96,6 +141,10 @@ class GameViewController: UIViewController {
     }
     
     private func handleMatches(match: Set<Block>){
+        //update profile
+        profile.blocksBroken += match.count
+        profile.setHighestCombo(combo: match.count)
+        
         //lock all match positions
         var sortedMatches: [Block] = []
         var chainCount: Int = 1
@@ -103,6 +152,7 @@ class GameViewController: UIViewController {
         var matchPositions: Set<Point> = []
         for block in match{
             if block.inChain == true{
+                profile.setHighestChain(chain: level.chainCount)
                 chainCount = level.chainCount
                 isChain = true
             }
@@ -146,18 +196,21 @@ class GameViewController: UIViewController {
     }
     
     private func handleMove(){
-        if level.lockedPositions.isEmpty{
+        if level.lockedPositions.isEmpty && level.fallingBlocksCount == 0{
             height = height + speed
-            if(height >= 1000){
+            if(height >= maxHeight){
                 //need to add a new row
                 let moved = level.addRow()
-                scene.addSprites(for: moved.1)
-                scene.animateFallenBlocks(for: moved.0, completion:{})
-                handleMatches(match: moved.2)
                 
                 if moved.3 == false{
                     //oh no, we lost :(
+                    height = maxHeight - 1
                     handleLoss()
+                }
+                else{
+                    scene.addSprites(for: moved.1)
+                    scene.animateFallenBlocks(for: moved.0, completion:{})
+                    handleMatches(match: moved.2)
                 }
             }
             //check for bouncey boyes
@@ -165,13 +218,14 @@ class GameViewController: UIViewController {
             scene.stopBouncing(blocks: bounced.0)
             scene.startBouncing(blocks: bounced.1)
             
-            height = height % 1000
+            height = height % maxHeight
             scene.moveBoard(height: height)
         }
     }
     
     private func handleLoss(){
         speed = 0
+        profile.setHighScore(score: scene.scoreVal)
         scene.animateLoss()
     }
     

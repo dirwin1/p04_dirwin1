@@ -45,6 +45,8 @@ class Block : CustomStringConvertible, Hashable {
     var flashFrames: [SKTexture] = []
     var falling: Bool = false
     var inChain: Bool = false
+    let timeToFall: Int = 5 //number of frames to wait before falling
+    var fallCounter: Int = 0
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(row)

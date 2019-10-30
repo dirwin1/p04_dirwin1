@@ -10,6 +10,16 @@ import Foundation
 import SpriteKit
 
 class FTButtonNode: SKSpriteNode {
+    
+    let notificationCenter = NotificationCenter.default
+
+    @objc func appMovedCameBack() {
+        isSelected = false
+        if (targetTouchUp != nil && targetTouchUp!.responds(to: actionTouchUp!)) {
+            UIApplication.shared.sendAction(actionTouchUp!, to: targetTouchUp, from: self, for: nil)
+        }
+    }
+    
     enum FTButtonActionType: Int {
         case TouchUpInside = 1,
         TouchDown, TouchUp
@@ -56,6 +66,9 @@ class FTButtonNode: SKSpriteNode {
         let bugFixLayerNode = SKSpriteNode(texture: nil, color: UIColor.clear, size: defaultTexture.size())
         bugFixLayerNode.position = self.position
         addChild(bugFixLayerNode)
+        
+        //unpress when the app goes out of scope
+        notificationCenter.addObserver(self, selector: #selector(appMovedCameBack), name: UIApplication.didBecomeActiveNotification, object: nil)
 
     }
 

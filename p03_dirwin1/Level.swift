@@ -14,9 +14,10 @@ let numRows = 12
 
 class Level {
     private var blocks = [[Block?]](repeating: [Block?](repeating: nil, count: numColumns), count: numRows)
-    private var upComingRow = [Block?](repeating: nil, count: numColumns)
+    var upComingRow = [Block?](repeating: nil, count: numColumns)
     var lockedPositions : Set<Point> = []
     var chainBlocksCount : Int = 0
+    var fallingBlocksCount : Int = 0
     var chainCount = 2
     
     func block(atColumn column: Int, row: Int) -> Block? {
@@ -64,16 +65,49 @@ class Level {
         for row in 0..<numRows{
             for col in 0..<numColumns{
                 //fall down
-                if block(atColumn: col, row: row) == nil && block(atColumn: col, row: row + 1) != nil
-                    && !isLocked(pos: Point(x: col, y: row)) && !isLocked(pos: Point(x: col, y: row + 1)) {
-        
+                if row > 0 && !isLocked(pos: Point(x: col, y: row)) && !isLocked(pos: Point(x: col, y: row - 1)) {
+                    if let b = block(atColumn: col, row: row){
+                        if let below = block(atColumn: col, row: row - 1){
+                            //there is someone beneath us, but we may be able to start our fall countdown
+                            if below.falling == true {
+                                if b.falling == false {
+                                    b.falling = true
+                                    fallingBlocksCount += 1
+                                }
+                                
+                                b.fallCounter += 1
+                            }
+                        }
+                        else{
+                            //Nobody below us, we can fall if we need to
+                            if b.falling == false {
+                                b.falling = true
+                                fallingBlocksCount += 1
+                            }
+                            
+                            b.fallCounter += 1
+                            if b.fallCounter >= b.timeToFall {
+                                //fall
+                                blocks[row][col] = nil
+                                b.row = row - 1
+                                blocks[row-1][col] = b
+
+                                movedBoys.insert(b)
+                            }
+                        }
+                    }
+                    /*
                     //fall down
                     movedBoys.insert(blocks[row+1][col]!)
                     blocks[row][col] = blocks[row+1][col]
                     blocks[row][col]!.column = col
                     blocks[row][col]!.row = row
                     blocks[row+1][col] = nil
-                    blocks[row][col]!.falling = true
+                    if blocks[row][col]!.falling == false{
+                        blocks[row][col]!.falling = true
+                        fallingBlocksCount += 1
+                    }
+ */
                 }
             }
         }
@@ -81,32 +115,29 @@ class Level {
         for row in 0..<numRows{
             for col in 0..<numColumns{
                 //check for landing
-                if blocks[row][col] != nil && blocks[row][col]!.falling == true {
-                    if(row == 0){
-                        blocks[row][col]?.falling = false;
-                        landedBoyes.insert(blocks[row][col]!)
-                        //check for matches
-                        let myMatches = checkForMatch(at: Point(x: col, y: row))
-                        if myMatches.isEmpty{
-                            if blocks[row][col]!.inChain == true{
-                                blocks[row][col]!.inChain = false
-                                chainBlocksCount -= 1
-                            }
+                if let b = blocks[row][col]{
+                    if b.falling == true{
+                        var landed: Bool = false
+                        if(row == 0){
+                            //landed
+                            landed = true
                         }
-                        else{
-                            matchedBoyes = matchedBoyes.union(myMatches)
+                        else if (blocks[row-1][col] != nil && blocks[row-1][col]?.falling == false)  {
+                            //landed
+                            landed = true
                         }
-                    }
-                    else if(blocks[row-1][col] != nil || isLocked(pos: Point(x: col, y: row-1))){
-                        //check for landing
-                        if(blocks[row-1][col]?.falling == false){
-                            blocks[row][col]?.falling = false;
-                            landedBoyes.insert(blocks[row][col]!)
+                        
+                        if landed {
+                            b.falling = false
+                            b.fallCounter = 0
+                            fallingBlocksCount -= 1
+                            
+                            landedBoyes.insert(b)
                             //check for matches
                             let myMatches = checkForMatch(at: Point(x: col, y: row))
                             if myMatches.isEmpty{
-                                if blocks[row][col]!.inChain == true{
-                                    blocks[row][col]!.inChain = false
+                                if b.inChain == true{
+                                    b.inChain = false
                                     chainBlocksCount -= 1
                                 }
                             }
@@ -332,11 +363,11 @@ class Level {
         var movedBoyes: Set<Block> = []
         var newBoyes: Set<Block> = []
         var matchedBoyes: Set<Block> = []
-        var survive: Bool = true
+        
         //check for survival
         for col in 0..<numColumns{
             if blocks[numRows-2][col] != nil{
-                survive = false
+                return (movedBoyes, newBoyes, matchedBoyes, false)
             }
         }
         
@@ -368,7 +399,7 @@ class Level {
         }
         
         //fill the bottom up with randos
-        return (movedBoyes, newBoyes, matchedBoyes, survive)
+        return (movedBoyes, newBoyes, matchedBoyes, true)
     }
     
     func checkForBouncers() -> (Set<Block>, Set<Block>){

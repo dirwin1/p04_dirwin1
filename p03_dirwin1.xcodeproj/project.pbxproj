@@ -39,6 +39,15 @@
 		D7ABDCFC2366874D00B6C54D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCFB2366874D00B6C54D /* GameScene.sks */; };
 		D7ABDCFF236687AB00B6C54D /* PopParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCFD236687AB00B6C54D /* PopParticle.sks */; };
 		D7ABDD00236687AB00B6C54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDCFE236687AB00B6C54D /* Assets.xcassets */; };
+		D7ABDD032368E7EF00B6C54D /* pausebutton2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDD012368E7EF00B6C54D /* pausebutton2.png */; };
+		D7ABDD042368E7EF00B6C54D /* pausebutton1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDD022368E7EF00B6C54D /* pausebutton1.png */; };
+		D7ABDD072369546E00B6C54D /* jellybutton2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDD052369546E00B6C54D /* jellybutton2.png */; };
+		D7ABDD082369546E00B6C54D /* jellybutton1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDD062369546E00B6C54D /* jellybutton1.png */; };
+		D7ABDD0A236974E800B6C54D /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7ABDD09236974E800B6C54D /* MenuScene.swift */; };
+		D7ABDD0C2369864E00B6C54D /* StatsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7ABDD0B2369864E00B6C54D /* StatsScene.swift */; };
+		D7ABDD0E23698AE800B6C54D /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7ABDD0D23698AE800B6C54D /* Profile.swift */; };
+		D7ABDD112369911100B6C54D /* backButton1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDD0F2369911000B6C54D /* backButton1.png */; };
+		D7ABDD122369911100B6C54D /* backButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7ABDD102369911100B6C54D /* backButton2.png */; };
 		D7D80CA72359FCF2002A2A45 /* firefall2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CA42359FCF2002A2A45 /* firefall2.png */; };
 		D7D80CA82359FCF2002A2A45 /* firefall3.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CA52359FCF2002A2A45 /* firefall3.png */; };
 		D7D80CA92359FCF2002A2A45 /* firefall1.png in Resources */ = {isa = PBXBuildFile; fileRef = D7D80CA62359FCF2002A2A45 /* firefall1.png */; };
@@ -135,6 +144,15 @@
 		D7ABDCFB2366874D00B6C54D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = ../../../../../../../.Trash/GameScene.sks; sourceTree = "<group>"; };
 		D7ABDCFD236687AB00B6C54D /* PopParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PopParticle.sks; sourceTree = "<group>"; };
 		D7ABDCFE236687AB00B6C54D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D7ABDD012368E7EF00B6C54D /* pausebutton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pausebutton2.png; sourceTree = "<group>"; };
+		D7ABDD022368E7EF00B6C54D /* pausebutton1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pausebutton1.png; sourceTree = "<group>"; };
+		D7ABDD052369546E00B6C54D /* jellybutton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jellybutton2.png; sourceTree = "<group>"; };
+		D7ABDD062369546E00B6C54D /* jellybutton1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jellybutton1.png; sourceTree = "<group>"; };
+		D7ABDD09236974E800B6C54D /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		D7ABDD0B2369864E00B6C54D /* StatsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsScene.swift; sourceTree = "<group>"; };
+		D7ABDD0D23698AE800B6C54D /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		D7ABDD0F2369911000B6C54D /* backButton1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton1.png; sourceTree = "<group>"; };
+		D7ABDD102369911100B6C54D /* backButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton2.png; sourceTree = "<group>"; };
 		D7D80CA42359FCF2002A2A45 /* firefall2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefall2.png; sourceTree = "<group>"; };
 		D7D80CA52359FCF2002A2A45 /* firefall3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefall3.png; sourceTree = "<group>"; };
 		D7D80CA62359FCF2002A2A45 /* firefall1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefall1.png; sourceTree = "<group>"; };
@@ -278,6 +296,10 @@
 				D7D80D10236201E9002A2A45 /* shine11.png */,
 				D7D80D1223622E50002A2A45 /* boostbutton1.png */,
 				D7D80D1323622E50002A2A45 /* boostbutton2.png */,
+				D7ABDD022368E7EF00B6C54D /* pausebutton1.png */,
+				D7ABDD012368E7EF00B6C54D /* pausebutton2.png */,
+				D7ABDD062369546E00B6C54D /* jellybutton1.png */,
+				D7ABDD052369546E00B6C54D /* jellybutton2.png */,
 				D7ABDCEB23666E5700B6C54D /* Scream1.png */,
 				D7ABDCEE23666E5800B6C54D /* Scream2.png */,
 				D7ABDCEA23666E5700B6C54D /* Scream3.png */,
@@ -285,6 +307,8 @@
 				D7ABDCEC23666E5700B6C54D /* Scream5.png */,
 				D7ABDCED23666E5700B6C54D /* Scream6.png */,
 				D7ABDCF92366864900B6C54D /* particle1.png */,
+				D7ABDD0F2369911000B6C54D /* backButton1.png */,
+				D7ABDD102369911100B6C54D /* backButton2.png */,
 			);
 			path = Sprites.atlas;
 			sourceTree = "<group>";
@@ -312,6 +336,8 @@
 			children = (
 				D70F58F0234B817900F4AF18 /* Sprites.atlas */,
 				D755BA2223478AB00020A691 /* GameScene.swift */,
+				D7ABDD09236974E800B6C54D /* MenuScene.swift */,
+				D7ABDD0B2369864E00B6C54D /* StatsScene.swift */,
 				D72321A2233BA7A800ED8200 /* AppDelegate.swift */,
 				D72321A6233BA7A800ED8200 /* Actions.sks */,
 				D72321AA233BA7A800ED8200 /* GameViewController.swift */,
@@ -324,6 +350,7 @@
 				D74080BA23552A3A006B46DF /* Point.swift */,
 				D74080AE2350C93C006B46DF /* Swap.swift */,
 				D7D80D162364C694002A2A45 /* FTButtonNode.swift */,
+				D7ABDD0D23698AE800B6C54D /* Profile.swift */,
 				D7ABDCF52366766400B6C54D /* kongtext.ttf */,
 				D7ABDCF723667B7600B6C54D /* 712_serif.ttf */,
 			);
@@ -391,6 +418,7 @@
 				D7D80CBB235BA076002A2A45 /* waterfall2.png in Resources */,
 				D7D80D11236201E9002A2A45 /* shine11.png in Resources */,
 				D7D80CBA235BA076002A2A45 /* waterfall3.png in Resources */,
+				D7ABDD032368E7EF00B6C54D /* pausebutton2.png in Resources */,
 				D74080B72354B668006B46DF /* fire-Highlighted.png in Resources */,
 				D70F58F2234B820900F4AF18 /* electric.png in Resources */,
 				D7D80CCA235BA2D8002A2A45 /* spookyfall4.png in Resources */,
@@ -416,6 +444,8 @@
 				D72321B0233BA7AF00ED8200 /* Assets.xcassets in Resources */,
 				D7D80CC9235BA2D8002A2A45 /* spookyfall2.png in Resources */,
 				D7ABDCEF23666E5800B6C54D /* Scream4.png in Resources */,
+				D7ABDD122369911100B6C54D /* backButton2.png in Resources */,
+				D7ABDD042368E7EF00B6C54D /* pausebutton1.png in Resources */,
 				D7D80CA82359FCF2002A2A45 /* firefall3.png in Resources */,
 				D7D80CD3235BA76D002A2A45 /* electricflash.png in Resources */,
 				D7D80CC3235BA2CF002A2A45 /* electricfall3.png in Resources */,
@@ -426,9 +456,11 @@
 				D7D80D1423622E50002A2A45 /* boostbutton1.png in Resources */,
 				D7ABDCF323666E5800B6C54D /* Scream6.png in Resources */,
 				D7D80CB1235B9F19002A2A45 /* grassfall2.png in Resources */,
+				D7ABDD112369911100B6C54D /* backButton1.png in Resources */,
 				D7D80CB9235BA076002A2A45 /* waterfall4.png in Resources */,
 				D7D80D082361FE87002A2A45 /* shine6.png in Resources */,
 				D7ABDCF123666E5800B6C54D /* Scream1.png in Resources */,
+				D7ABDD072369546E00B6C54D /* jellybutton2.png in Resources */,
 				D70F58F8234B822100F4AF18 /* grass.png in Resources */,
 				D7D80CB2235B9F19002A2A45 /* grassfall3.png in Resources */,
 				D7D80CA92359FCF2002A2A45 /* firefall1.png in Resources */,
@@ -454,6 +486,7 @@
 				D74080B92354B668006B46DF /* spooky-Highlighted.png in Resources */,
 				D7D80D0F2361FE87002A2A45 /* shine5.png in Resources */,
 				D74080B52354B668006B46DF /* water-Highlighted.png in Resources */,
+				D7ABDD082369546E00B6C54D /* jellybutton1.png in Resources */,
 				D7D80CFB23614A92002A2A45 /* chain-7.png in Resources */,
 				D7D80CB0235B9F19002A2A45 /* grassfall1.png in Resources */,
 				D7D80CD1235BA76D002A2A45 /* fireflash.png in Resources */,
@@ -484,10 +517,13 @@
 				D755BA2323478AB00020A691 /* GameScene.swift in Sources */,
 				D7D80D172364C694002A2A45 /* FTButtonNode.swift in Sources */,
 				D7DF521E2344F06F00856752 /* Block.swift in Sources */,
+				D7ABDD0A236974E800B6C54D /* MenuScene.swift in Sources */,
 				D74080AF2350C93C006B46DF /* Swap.swift in Sources */,
 				D72321AB233BA7A800ED8200 /* GameViewController.swift in Sources */,
 				D74080BB23552A3A006B46DF /* Point.swift in Sources */,
 				D755BA1D234784C40020A691 /* Level.swift in Sources */,
+				D7ABDD0E23698AE800B6C54D /* Profile.swift in Sources */,
+				D7ABDD0C2369864E00B6C54D /* StatsScene.swift in Sources */,
 				D72321A3233BA7A800ED8200 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
